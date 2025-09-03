@@ -1,0 +1,32 @@
+//
+// BREAKPOINTS
+// For extra breakpoints, use xxs (< xs), xl (> lg) and xxl (> xl)
+// -----------------------------------------------------------------------------
+
+$lg-max: 1920px;
+$lg-min: 1440px;
+$md-max: $lg-min - 1;
+$md-min: 1025px;
+$sm-max: $md-min - 1;
+$sm-min: 768px;
+$xs-max: $sm-min - 1;
+
+$gutter-width-lg: 32px;
+$gutter-width-md: 32px;
+$gutter-width-sm: 8px;
+$gutter-width-xs: 8px;
+
+//Nos grilles sur les design 404 contiennent toujours 16 colonnes, mais il est possible d'adapter selon le besoin.
+$columns-amount-lg: 16;
+$columns-amount-md: 16;
+$columns-amount-sm: 16;
+$columns-amount-xs: 16;
+
+//
+// CONTAINER SIZES
+// -----------------------------------------------------------------------------
+
+$container-lg: calc(100% - (40px * 2));
+$container-md: calc(100% - (40px * 2));
+$container-sm: calc(100% - (16px * 2));
+$container-xs: calc(100% - (16px * 2));

@@ -1,0 +1,62 @@
+
+
+.duydev-carousel {
+    position: relative;
+    width: calc(100vw - ((100vw - 1146px) / 2));
+    margin-left: auto;
+    margin-right: 0;
+
+    .treatments-slider {
+        position: relative;
+        width: 100%;
+    }
+
+    .treatment-card {
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        height: 100%;
+
+        .treatment-image {
+            width: 100%;
+            height: 20rem;
+            object-fit: cover;
+        }
+
+        .treatment-content {
+            padding: 20px 0 0 16px;
+
+            .treatment-title {
+                font-size: 24px;
+            }
+
+            .treatment-description {
+            }
+        }
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: #333;
+        
+        &:after {
+            font-size: 24px;
+        }
+    }
+
+    .swiper-pagination {
+        position: relative;
+        margin-top: 20px;
+        
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: #ccc;
+            opacity: 1;
+            
+            &-active {
+                background: #333;
+            }
+        }
+    }
+}

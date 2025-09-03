@@ -1,0 +1,14 @@
+@mixin archivo($font-weight: normal){
+    font-family: "Archivo", serif;
+    font-weight: $font-weight;
+}
+
+@mixin inter($font-weight: normal){
+    font-family: "Inter", sans-serif;
+    font-weight: $font-weight;
+}
+
+@mixin roboto($font-weight: normal){
+    font-family: "Roboto", sans-serif;
+    font-weight: $font-weight;
+}

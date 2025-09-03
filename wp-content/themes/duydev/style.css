@@ -1,0 +1,23 @@
+/*!
+Theme Name: DuyDev
+Theme URI: https://duytr.com/
+Author: Duy Tran
+Author URI: https://duytr.com/
+Description: A modern WordPress theme built for performance and flexibility.
+Version: 1.0.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: LICENSE
+Text Domain: duydev
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned.
+*/
+
+/* TEMPORARY TEST - If you see red background, CSS is loading */
+body {
+    background-color: red !important;
+    margin: 0 !important;
+}

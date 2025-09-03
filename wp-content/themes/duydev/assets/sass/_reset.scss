@@ -1,0 +1,45 @@
+//
+// Root styles
+// -----------------------------------------------------------------------------
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    outline: none !important;
+    box-sizing: border-box;
+}
+
+html, body {
+    position: relative;
+    min-width: 320px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+//
+// Form styles
+// -----------------------------------------------------------------------------
+
+input, textarea {
+    border-radius: 0
+}
+
+//
+// Image styles
+// -----------------------------------------------------------------------------
+
+img {
+    max-width: 100%;
+}
+
+//
+// Link styles
+// -----------------------------------------------------------------------------
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover, &:focus, &:active, &:visited {
+        text-decoration: none;
+    }
+}

@@ -1,0 +1,211 @@
+@use "config" as *;
+@use "mixins" as *;
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.caps {
+    text-transform: uppercase;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.text-hide {
+    text-indent: -9999px;
+}
+
+.hide {
+    display: none !important;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.no-overflow {
+    overflow: hidden;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.flex-justify-start {
+    justify-content: flex-start;
+}
+
+.flex-justify-center {
+    justify-content: center;
+}
+
+.flex-justify-end {
+    justify-content: flex-end;
+}
+
+.flex-justify-between {
+    justify-content: space-between;
+}
+
+.flex-justify-around {
+    justify-content: space-around;
+}
+
+.flex-justify-evenly {
+    justify-content: space-evenly;
+}
+
+.flex-align-start {
+    align-items: flex-start;
+}
+
+.flex-align-center {
+    align-items: center;
+}
+
+.flex-align-end {
+    align-items: flex-end;
+}
+
+.gap-8 {
+    gap: 8px;
+}
+
+.gap-12 {
+    gap: 12px;
+}
+
+// Hide from both screenreaders and browsers: h5bp.com/u
+.hide-all {
+    display: none;
+    visibility: hidden;
+}
+
+.clearfix {
+    @include clearfix();
+}
+
+.ajax-wrapper {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, .5);
+    z-index: 99999;
+    .ajax-loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 8px solid $red7;
+        border-radius: 50%;
+        border-top: 8px solid $white;
+        width: 60px;
+        height: 60px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+        z-index: 1;
+    }
+}
+
+[data-link="copy"] {
+    cursor: pointer;
+}
+
+[data-type="break-text"], [data-type="fade-in-up"] {
+    display: inline-block;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.like-section {
+    padding-left: 40px;
+    padding-right: 40px;
+    @media screen and (max-width: $sm-max) {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+.pl-40 {
+    padding-left: 40px;
+}
+
+.pr-40 {
+    padding-right: 40px;
+}
+
+.pl-sm-16 {
+    @media screen and (max-width: $sm-max) {
+        padding-left: 16px;
+    }
+}
+
+.pr-sm-16 {
+    @media screen and (max-width: $sm-max) {
+        padding-right: 16px;
+    }
+}
+
+.mw-75 {
+    max-width: 75rem;
+}
+
+.mw-60 {
+    max-width: 60rem;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+.mr-auto {
+    margin-right: auto;
+}
+
+[data-type="text-reveal-with-scroll"] .no-overflow {
+    margin-bottom: -.25em;
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}

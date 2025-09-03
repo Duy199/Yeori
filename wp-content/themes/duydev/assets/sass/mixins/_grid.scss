@@ -1,0 +1,28 @@
+@mixin grid($columns-count, $gutter-width){
+    display: grid;
+    grid-template-columns: repeat($columns-count, minmax(auto, 1fr));
+    grid-column-gap: $gutter-width;
+    align-items: start;
+
+    > * {
+        grid-column-end: span $columns-count; // each grid item takes full-width by default
+    }
+}
+
+@mixin col($columns-amount){
+    grid-column-end: span #{$columns-amount};
+}
+
+@mixin col-start($col-number){
+    grid-column-start: #{$col-number};
+}
+
+@mixin grid-auto($gutter-width, $min-width:0){
+    display: grid;
+    grid-gap: $gutter-width;
+    grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+}
+
+@mixin property-calc-col($property, $column, $grid-column: var(--column-ammount), $grid-gutter: var(--gutter-width)){
+    #{$property}: calc((((100% - ((#{$grid-column} - 1) * #{$grid-gutter})) / #{$grid-column}) * #{$column}) + (#{$grid-gutter} * (#{$column} - 1)))
+}

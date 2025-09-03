@@ -1,0 +1,22 @@
+@use "sass:math";
+
+@function vw($target-size, $is-mobile: false, $min-size: null, $max-size: null) {
+    // Default viewport widths
+    $desktop-viewport: 1920;
+    $mobile-viewport: 767;
+    
+    // Strip units using math.div instead of /
+    $target-size: math.div($target-size, 1px);
+    $min-size: if($min-size, math.div($min-size, 1px), $target-size);
+    $max-size: if($max-size, math.div($max-size, 1px), $target-size);
+    
+    @if $is-mobile {
+        $viewport-width: $mobile-viewport;
+        $vw-calc: math.div($target-size, $viewport-width) * 100;
+        @return clamp(#{$min-size}px, #{$vw-calc}vw, #{$max-size}px);
+    } @else {
+        $viewport-width: $desktop-viewport;
+        $vw-calc: math.div($target-size, $viewport-width) * 100;
+        @return clamp(#{$min-size}px, #{$vw-calc}vw, #{$target-size}px);
+    }
+}
