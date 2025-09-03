@@ -1,0 +1,31 @@
+/* CSS from React styles.css */
+.smooth-wrapper { min-height: 100vh; overflow: visible; }
+.smooth-content { height: 100vh; overflow: visible; }
+.panel {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    color: #fff;
+    width: 100vw;
+}
+.count-section {
+    position: fixed; top: 16px; right: 16px;
+    background: rgba(0,0,0,.6); color: #fff; padding: 8px 12px; border-radius: 8px;
+    font-weight: 600; z-index: 10;
+    overflow: hidden;
+}
+.count-section .active {
+    animation: go-up 0.5s forwards;
+    display: inline-block;
+}
+@keyframes go-up {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
