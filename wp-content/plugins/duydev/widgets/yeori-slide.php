@@ -143,7 +143,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				
 				locked = true;
 				gsap.to(window, {
-					duration: 1,
+					duration: 0.5,
 					scrollTo: { y: y, autoKill: false },
 					ease: 'power3.out',
 					onStart: function() {
@@ -152,7 +152,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					onComplete: function() {
 						current = targetIndex;
 						countSpan.textContent = (targetIndex + 1);
-						setTimeout(function() { locked = false; }, 300);
+						setTimeout(function() { locked = false; }, 1000);
 						countSpan.classList.add('active');
 					}
 				});
