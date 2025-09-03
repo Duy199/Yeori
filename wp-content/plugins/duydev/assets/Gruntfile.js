@@ -33,12 +33,7 @@ module.exports = function(grunt) {
 					'js/duydev/duydev.js',
 
 					/* widgets */
-					'js/widgets/duydev-carousel.js',
-					'js/widgets/duydev-faq.js',
-					'js/widgets/checkout.js',
-					'js/widgets/duydev-press-load.js',
-					'js/widgets/duydev-press-list.js',
-					'js/widgets/check-payment-status.js',
+					'js/widgets/aText.js',
 				],
 				dest: 'js/duydev.js'
 			}

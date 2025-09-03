@@ -87,6 +87,11 @@ class DuyDev {
         wp_enqueue_script('gsap-scrolltrigger', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.6/ScrollTrigger.min.js', array('gsap'), null, true);
         wp_enqueue_script('gsap-scrollto', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.6/ScrollToPlugin.min.js', array('gsap'), null, true);
         wp_enqueue_script('gsap-observer', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.6/Observer.min.js', array('gsap'), null, true);
+        wp_enqueue_script('gsap-splittext', 'https://assets.codepen.io/16327/SplitText3.min.js', array('gsap'), null, true);
+        
+        // // Register AText animation
+        // wp_register_style('atext-css', plugins_url('assets/css/atext.css', __FILE__));
+        // wp_register_script('atext-js', plugins_url('assets/js/widgets/aText.js', __FILE__), array('gsap'), null, true);
         
         // wp_register_script('swiper-js', plugins_url('assets/js/swiper-bundle.min.js', __FILE__));
         wp_register_script('duydev-js', plugins_url('assets/js/duydev.min.js', __FILE__));
@@ -99,15 +104,18 @@ class DuyDev {
     }
 
     public function widget_scripts() {
-    wp_enqueue_style('swiper-css');
-    wp_enqueue_style('duydev-css');
-    // wp_enqueue_script('swiper-js');
-    // Ensure GSAP and ScrollTrigger are loaded in Elementor editor/preview
-    wp_enqueue_script('gsap');
-    wp_enqueue_script('gsap-scrolltrigger');
-    wp_enqueue_script('gsap-scrollto');
-    wp_enqueue_script('gsap-observer');
-    wp_enqueue_script('duydev-js');
+        wp_enqueue_style('swiper-css');
+        wp_enqueue_style('duydev-css');
+        wp_enqueue_style('atext-css');
+        // wp_enqueue_script('swiper-js');
+        // Ensure GSAP and ScrollTrigger are loaded in Elementor editor/preview
+        wp_enqueue_script('gsap');
+        wp_enqueue_script('gsap-scrolltrigger');
+        wp_enqueue_script('gsap-scrollto');
+        wp_enqueue_script('gsap-observer');
+        wp_enqueue_script('gsap-splittext');
+        wp_enqueue_script('atext-js');
+        wp_enqueue_script('duydev-js');
     }
 }
 

@@ -73,17 +73,12 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 			<div class="smooth-content" id="<?php echo esc_attr($uid); ?>">
 				<?php foreach ($slides as $i => $slide): ?>
 					<section class="panel p<?php echo ($i+1); ?>" style="background:<?php echo esc_attr($slide['background']); ?>">
-						<h1><?php echo esc_html($slide['heading']); ?></h1>
-						<p><?php echo esc_html($slide['content']); ?></p>
+						<h1 class="atext atext-slow"><?php echo esc_html($slide['heading']); ?></h1>
+						<p class="atext atext-slow"><?php echo esc_html($slide['content']); ?></p>
 					</section>
 				<?php endforeach; ?>
 			</div>
 		</div>
-		<!-- Load GSAP plugins directly -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.6/gsap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.6/ScrollTrigger.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.6/ScrollToPlugin.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.6/Observer.min.js"></script>
 		<script>
 		(function($){
 			// Wait for GSAP to load
@@ -152,13 +147,13 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					scrollTo: { y: y, autoKill: false },
 					ease: 'power3.out',
 					onStart: function() {
-						countSection.classList.remove('active');
+						countSpan.classList.remove('active');
 					},
 					onComplete: function() {
 						current = targetIndex;
 						countSpan.textContent = (targetIndex + 1);
-						setTimeout(function() { locked = false; }, 280);
-						countSection.classList.add('active');
+						setTimeout(function() { locked = false; }, 300);
+						countSpan.classList.add('active');
 					}
 				});
 			};

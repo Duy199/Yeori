@@ -1,0 +1,29 @@
+/* AText Animation Styles */
+.atext {
+    overflow: hidden;
+    /* Optional: Add some basic styling */
+}
+
+.atext .char {
+    display: inline-block;
+    will-change: transform;
+}
+
+.atext .word {
+    display: inline-block;
+}
+
+/* Optional: Add some helper classes for different animation styles */
+.atext-fast {
+    --atext-stagger: 0.01s;
+    --atext-duration: 0.5s;
+}
+
+.atext-slow {
+    --atext-stagger: 0.05s;
+    --atext-duration: 1.5s;
+}
+
+.atext-bounce {
+    --atext-ease: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
