@@ -10,15 +10,31 @@
     width: 100vw;
 }
 .count-section {
-    position: fixed; top: 16px; right: 16px;
-    background: rgba(0,0,0,.6); color: #fff; padding: 8px 12px; border-radius: 8px;
+    position: fixed; 
+    top: 16%; 
+    right: 5%;
+    color: #fff; 
+    border-radius: 8px;
     font-weight: 600; z-index: 10;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    .num {
+        font-size: 12.5rem;
+        line-height: 1.10;
+        letter-spacing: -4px;
+    }
+    .max {
+        font-size: 3rem;
+        letter-spacing: -2px;
+        text-align: right;
+        opacity: 0.5;
+    }
 }
 .count-section .active {
     animation: go-up 0.5s forwards;
-    display: inline-block;
-}
+    display: inline-block;}
 @keyframes go-up {
     from {
         transform: translateY(50px);
