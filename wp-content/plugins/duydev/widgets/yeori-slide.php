@@ -108,11 +108,16 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 							<div class="panel-content-2">
 								<h4 class="title">✧ Highlights công nghệ ✧</h4>
 								<?php if ($video_url): ?>
-									<div class="video-section">
-										<video autoplay muted loop>
-											<source src="<?php echo esc_url($video_url); ?>" type="video/mp4">
-											Your browser does not support the video tag.
-										</video>
+									<div class="video-wrapper">
+										<div class="video-section">
+											<video autoplay muted loop>
+												<source src="<?php echo esc_url($video_url); ?>" type="video/mp4">
+												Your browser does not support the video tag.
+											</video>
+										</div>
+										<div class=line-wrapper>
+											<div class="line"></div>
+										</div>
 									</div>
 								<?php endif; ?>
 							</div>
