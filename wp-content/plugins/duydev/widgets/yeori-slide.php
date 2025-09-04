@@ -75,9 +75,6 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 		$uid = uniqid('yeori_slide_');
 		?>
 		<div class="smooth-wrapper">
-			<div class="count-section active koho">
-				<span class="active num">01</span><span class="max">/0<?php echo esc_html($maxSlide); ?></span>
-			</div>
 			<div class="smooth-content" id="<?php echo esc_attr($uid); ?>">
 				<?php foreach ($slides as $i => $slide): 
 					$bg_image = !empty($slide['background_image']['url']) ? $slide['background_image']['url'] : '';
@@ -94,6 +91,9 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						<?php if ($bg_image): ?>
 							<div class="panel-overlay" style="background-color: #00000080; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
 						<?php endif; ?>
+						<div class="count-section koho">
+							<span class="num atext atext-slow">0<?php echo ($i+1); ?></span><span class="max">/0<?php echo esc_html($maxSlide); ?></span>
+						</div>
 						<div class="panel-content" style="position: relative; z-index: 2;">
 							<h1 class="atext atext-slow"><?php echo esc_html($slide['heading']); ?></h1>
 							<p class="atext atext-slow"><?php echo esc_html($slide['content']); ?></p>
@@ -120,8 +120,6 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				if(!container) return;
 				var panels = gsap.utils.toArray('#<?php echo esc_js($uid); ?> .panel');
 				var steps = Math.max(0, panels.length - 1);
-				var countSection = container.parentNode.querySelector('.count-section');
-				var countSpan = countSection.querySelector('span.num');
 				
 				// Function to format numbers with leading zero
 				function formatNumber(num) {
@@ -144,7 +142,6 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						onUpdate: function(self) {
 							if (steps <= 0 || isJumping) return;
 							current = Math.round(self.progress * steps);
-							countSpan.textContent = formatNumber(current + 1);
 						}
 					}
 				});
@@ -183,19 +180,15 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					ease: 'power3.out',
 					onStart: function() {
 						if (targetIndex === 0 || targetIndex === Number(maxSlide) - 1) {
-							console.log('hehe')
 							return;
 						}
-						countSpan.classList.remove('active');
 					},
 					onComplete: function() {
 						current = targetIndex;
-						countSpan.textContent = formatNumber(targetIndex + 1);
 						setTimeout(function() { 
 							locked = false; 
 							isJumping = false; // Re-enable onUpdate
 						}, 1000);
-						countSpan.classList.add('active');
 					}
 				});
 			};

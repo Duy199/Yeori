@@ -8,9 +8,10 @@
     text-align: center;
     color: #fff;
     width: 100vw;
+    position: relative;
 }
 .count-section {
-    position: fixed; 
+    position: absolute; 
     top: 16%; 
     right: 5%;
     color: #fff; 
