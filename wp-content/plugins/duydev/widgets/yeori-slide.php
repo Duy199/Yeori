@@ -130,6 +130,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				var current = 0;
 				var locked = false;
 				var isJumping = false; // Flag to prevent onUpdate interference during jumps
+				var touchTime = 0;
 				
 				// Pin container and animate panels
 				var tl = gsap.timeline({
@@ -142,6 +143,9 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						onUpdate: function(self) {
 							if (steps <= 0 || isJumping) return;
 							current = Math.round(self.progress * steps);
+						},
+						onLeave: function() {
+							touchTime = 0;
 						}
 					}
 				});
@@ -166,6 +170,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 			// Jump to index logic
 			var current = 0;
 			var locked = false;
+	
 			var gotoIndex = function(index) {
 				if (locked || steps <= 0) return;
 				var targetIndex = gsap.utils.clamp(0, steps, index);
@@ -188,7 +193,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						setTimeout(function() { 
 							locked = false; 
 							isJumping = false; // Re-enable onUpdate
-						}, 1000);
+						}, 1100);
 					}
 				});
 			};
@@ -207,13 +212,24 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 							setTimeout(function() { obs.enable(); }, 1000);
 							return;
 						}
+						if (current === 0 && touchTime === 0) {
+							++touchTime;
+							gotoIndex(current); 
+							return;
+						}
 						gotoIndex(current + 1); 
 					},
 					onUp: function() { 
 						// If at first slide, allow scroll to continue upward
+						console.log(current);
 						if (current <= 0) {
 							obs.disable();
 							setTimeout(function() { obs.enable(); }, 1000);
+							return;
+						}
+						if (current === maxSlide - 1 && touchTime === 0) {
+							++touchTime;
+							gotoIndex(current);
 							return;
 						}
 						gotoIndex(current - 1); 
