@@ -57,6 +57,15 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 							'url' => '',
 						],
 					],
+					[
+						'name' => 'video_url',
+						'label' => __('Video URL', 'duydev'),
+						'type' => Controls_Manager::URL,
+						'placeholder' => __('https://your-video-url.mp4', 'duydev'),
+						'default' => [
+							'url' => '',
+						],
+					],
 				],
 				'default' => [
 					[ 'heading' => 'Section 1', 'content' => 'Scroll (vuốt) 1 phát là nhảy section', 'background' => '#1e293b' ],
@@ -79,22 +88,34 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				<?php foreach ($slides as $i => $slide): 
 					$bg_image = !empty($slide['background_image']['url']) ? $slide['background_image']['url'] : '';
 					$bg_color = !empty($slide['background']) ? $slide['background'] : '#1e293b';
+					$video_url = !empty($slide['video_url']['url']) ? $slide['video_url']['url'] : '';
 					
 					$bg_style = '';
 					if ($bg_image) {
-						$bg_style = "background-image: url('" . esc_url($bg_image) . "'); background-size: cover; background-position: center; background-repeat: no-repeat;";
+						$bg_style = "background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('" . esc_url($bg_image) . "'); background-size: cover; background-position: center; background-repeat: no-repeat;";
 					} else {
 						$bg_style = "background-color: " . esc_attr($bg_color) . ";";
 					}
 				?>
 					<section class="panel p<?php echo ($i+1); ?>" style="<?php echo $bg_style; ?>">
-						<?php if ($bg_image): ?>
-							<div class="panel-overlay" style="background-color: #00000080; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
-						<?php endif; ?>
-						<div class="count-section koho">
-							<span class="num atext atext-slow">0<?php echo ($i+1); ?></span><span class="max">/0<?php echo esc_html($maxSlide); ?></span>
+						<div class="video" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1;">
+							<?php if ($video_url): ?>
+								<video autoplay muted loop style="width: 300px; height: 200px; object-fit: cover; border-radius: 10px;">
+									<source src="<?php echo esc_url($video_url); ?>" type="video/mp4">
+									Your browser does not support the video tag.
+								</video>
+							<?php endif; ?>
 						</div>
-						<div class="panel-content" style="position: relative; z-index: 2;">
+						<div class="panel-content-top">
+							<h4 class="title">✧ Highlights công nghệ ✧</h4>
+							<div class="big-description">
+								<h1 class="atext atext-slow"><?php echo esc_html($slide['heading']); ?></h1>
+								<div class="count-section koho">
+									<span class="num atext atext-slow">0<?php echo ($i+1); ?></span><span class="max">/0<?php echo esc_html($maxSlide); ?></span>
+								</div>
+							</div>
+						</div>
+						<div class="panel-content">
 							<h1 class="atext atext-slow"><?php echo esc_html($slide['heading']); ?></h1>
 							<p class="atext atext-slow"><?php echo esc_html($slide['content']); ?></p>
 						</div>

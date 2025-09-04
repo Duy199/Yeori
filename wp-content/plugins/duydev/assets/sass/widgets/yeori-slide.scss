@@ -3,47 +3,80 @@
 .smooth-content { height: 100vh; overflow: visible; }
 .panel {
     height: 100vh;
-    display: grid;
-    place-items: center;
-    text-align: center;
-    color: #fff;
-    width: 100vw;
-    position: relative;
-}
-.count-section {
-    position: absolute; 
-    top: 16%; 
-    right: 5%;
-    color: #fff; 
-    border-radius: 8px;
-    font-weight: 600; 
-    z-index: 10;
-    overflow: hidden;
     display: flex;
+    color: #fff !important;
+    width: 100vw;
     flex-direction: column;
-    font-weight: 600;
-    .num {
-        font-size: 12.5rem;
-        line-height: 1.10;
-        letter-spacing: -4px;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    .video {
+        position: absolute; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%); 
+        z-index: 1;
     }
-    .max {
-        font-size: 3rem;
-        letter-spacing: -2px;
-        text-align: right;
-        opacity: 0.5;
+    .panel-content-top {
+        margin-top: 100px;
+        max-width: 1200px;
+        width: 100%;
+        padding: 0px 20px;
+        @media(min-width: 1920px) {
+            max-width: 1440px;
+        }
+        .title {
+            text-align: center;
+        }
+        .big-description {
+        display: flex;
+        justify-content: space-between;
+        .count-section {
+            // position: absolute; 
+            top: 16%; 
+            right: 5%;
+            border-radius: 8px;
+            font-weight: 600; 
+            z-index: 10;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            font-weight: 600;
+            .num {
+                font-size: 12.5rem;
+                line-height: 1.10;
+                letter-spacing: -4px;
+            }
+            .max {
+                font-size: 3rem;
+                letter-spacing: -2px;
+                text-align: right;
+                opacity: 0.5;
+            }
+        }
+        .count-section .active {
+            animation: go-up 0.5s forwards;
+            display: inline-block;}
+        @keyframes go-up {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
     }
-}
-.count-section .active {
-    animation: go-up 0.5s forwards;
-    display: inline-block;}
-@keyframes go-up {
-    from {
-        transform: translateY(50px);
-        opacity: 0;
     }
-    to {
-        transform: translateY(0);
-        opacity: 1;
+    .panel-content {
+        color: #fff !important; 
+        max-width: 1200px;
+        width: 100%;
+        padding: 0px 20px;
+        margin-bottom: 100px;
+        @media(min-width: 1920px) {
+            max-width: 1440px;
+        }
     }
 }
