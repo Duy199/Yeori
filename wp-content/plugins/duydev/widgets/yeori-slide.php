@@ -140,12 +140,18 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						end: function() { return '+=' + steps * window.innerHeight; },
 						pin: true,
 						scrub: true,
+						markers: true,
 						onUpdate: function(self) {
 							if (steps <= 0 || isJumping) return;
 							current = Math.round(self.progress * steps);
 						},
 						onLeave: function() {
 							touchTime = 0;
+							console.log('onLeave, touchTime reset to 0');
+						},
+						onLeaveBack: function() {
+							touchTime = 0;
+							console.log('onLeaveBack, touchTime reset to 0');
 						}
 					}
 				});
@@ -180,7 +186,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				locked = true;
 				isJumping = true; // Prevent onUpdate interference
 				gsap.to(window, {
-					duration: 0.5,
+					duration: 1,
 					scrollTo: { y: y, autoKill: false },
 					ease: 'power3.out',
 					onStart: function() {
@@ -193,7 +199,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						setTimeout(function() { 
 							locked = false; 
 							isJumping = false; // Re-enable onUpdate
-						}, 1100);
+						}, 1000);
 					}
 				});
 			};
@@ -221,7 +227,6 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					},
 					onUp: function() { 
 						// If at first slide, allow scroll to continue upward
-						console.log(current);
 						if (current <= 0) {
 							obs.disable();
 							setTimeout(function() { obs.enable(); }, 1000);
