@@ -98,9 +98,9 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					}
 				?>
 					<section class="panel p<?php echo ($i+1); ?>" style="<?php echo $bg_style; ?>">
-						<div class="video" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1;">
+						<div class="video-section">
 							<?php if ($video_url): ?>
-								<video autoplay muted loop style="width: 300px; height: 200px; object-fit: cover; border-radius: 10px;">
+								<video autoplay muted loop>
 									<source src="<?php echo esc_url($video_url); ?>" type="video/mp4">
 									Your browser does not support the video tag.
 								</video>
