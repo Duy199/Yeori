@@ -1,25 +1,11 @@
-@mixin archivo($font-weight: normal){
-    font-family: "Archivo", serif;
-    font-weight: $font-weight;
+
+@mixin cabin($font-weight: normal){
+    font-family: 'Cabin', sans-serif;
+    // font-weight: $font-weight;
 }
 
-@mixin inter($font-weight: normal){
-    font-family: "Inter", sans-serif;
-    font-weight: $font-weight;
-}
-
-@mixin roboto($font-weight: normal){
-    font-family: "Roboto", sans-serif;
-    font-weight: $font-weight;
-}
-
-@mixin roboto-slab($font-weight: normal){
-    font-family: "Roboto Slab", sans-serif;
-    font-weight: $font-weight;
-}
-
-@mixin space-grotesk($font-weight: normal){
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: $font-weight;
+@mixin koho($font-weight: normal){
+    font-family: 'KoHo', sans-serif;
+    // font-weight: $font-weight;
 }
 

@@ -78,10 +78,9 @@ html {
 
 body {
     margin:0;
-    @include inter();
-    @include roboto();
-    @include roboto-slab();
+    @include koho();
 
+    
     &.preload *{
         animation-duration: 0s !important;
         -webkit-animation-duration: 0s !important;
@@ -129,24 +128,17 @@ body {
 //
 // Heading styles
 // -----------------------------------------------------------------------------
-h1, h2, h3, h4, .red-highlight, .roboto-slab {
-    font-family: "Roboto Slab" !important;
+
+.cabin {
+    @include cabin();
 }
 
-.roboto {
-    font-family: "Roboto" !important;
+.koho {
+    @include koho();
 }
 
-.red-highlight {
-    color: #D13239;
-}
-
-p, span, li {
-    font-family: "Roboto" !important;
-}
-
-.footer-menu a {
-    font-family: "Roboto Slab" !important;
+p, span {
+    @include cabin();
 }
 
 .like-h1, .fs-48 {
@@ -213,40 +205,7 @@ p, span, li {
 // Text styles
 // -----------------------------------------------------------------------------
 
-.besley {
-    // @include besley();
-}
 
-p {
-    font-family: inherit;
-    font-size: inherit;
-    // font-size: 16px;
-
-    &:first-child{
-        margin-top:0;
-    }
-
-    &:last-child{
-        margin-bottom:0;
-    }
-
-    &.small{
-        font-size: vw(14px, false, 14px);
-    }
-    &.suptitle{
-        text-transform: uppercase;
-        font-size: vw(14px, false, 14px);
-    }
-
-    @media only screen and (max-width: $xs-max) {
-        font-size: vw(18px, true, 14px, 18px);
-    }
-}
-
-span{
-    font-family: inherit;
-    font-size: inherit;
-}
 
 .display1 {
     font-size: 5.125rem; // 82px

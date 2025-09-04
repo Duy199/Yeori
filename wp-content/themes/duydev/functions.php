@@ -160,14 +160,11 @@ function duydev_scripts() {
 	// wp_enqueue_style( 'index', get_template_directory_uri() . '/assets/css/index.css', array(), DUYDEV_VERSION, false );
     wp_enqueue_script( 'duydev-script', get_template_directory_uri() . '/assets/js/all.min.js', array(), DUYDEV_VERSION, true );
 
-	// Enqueue Google Fonts: Archivo
-	wp_enqueue_style( 'archivo-fonts', 'https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap', false );
-
-	// Enqueue Google Fonts: Roboto, Roboto Slab
-	wp_enqueue_style( 'roboto-fonts', 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap', false );
-	wp_enqueue_style( 'roboto-slab-fonts', 'https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&display=swap', false );
-
 	
+	// Enqueue Google Fonts: Koho, Cabin
+	wp_enqueue_style('koho-fonts', 'https://fonts.googleapis.com/css2?family=KoHo:wght@300;400;500;600;700&display=swap', false);
+	wp_enqueue_style('cabin-fonts', 'https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap', false);
+
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}

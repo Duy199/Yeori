@@ -75,8 +75,8 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 		$uid = uniqid('yeori_slide_');
 		?>
 		<div class="smooth-wrapper">
-			<div class="count-section active">
-				<span class="active num">01</span><span class="max">/<?php echo esc_html($maxSlide); ?></span>
+			<div class="count-section active koho">
+				<span class="active num">01</span><span class="max">/0<?php echo esc_html($maxSlide); ?></span>
 			</div>
 			<div class="smooth-content" id="<?php echo esc_attr($uid); ?>">
 				<?php foreach ($slides as $i => $slide): 
@@ -103,6 +103,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 			</div>
 		</div>
 		<script>
+		const maxSlide = "<?php echo esc_js( $maxSlide ); ?>";
 		(function($){
 			// Wait for GSAP to load
 			function initYeoriSlide() {
@@ -126,10 +127,11 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				function formatNumber(num) {
 					return num < 10 ? '0' + num : num.toString();
 				}
-				// Function to format numbers with leading zero
-				function formatNumber(num) {
-					return num < 10 ? '0' + num : num.toString();
-				}
+				
+				// Variables for state management
+				var current = 0;
+				var locked = false;
+				var isJumping = false; // Flag to prevent onUpdate interference during jumps
 				
 				// Pin container and animate panels
 				var tl = gsap.timeline({
@@ -140,7 +142,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						pin: true,
 						scrub: true,
 						onUpdate: function(self) {
-							if (steps <= 0) return;
+							if (steps <= 0 || isJumping) return;
 							current = Math.round(self.progress * steps);
 							countSpan.textContent = formatNumber(current + 1);
 						}
@@ -174,17 +176,25 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				if (!Number.isFinite(y)) return;
 				
 				locked = true;
+				isJumping = true; // Prevent onUpdate interference
 				gsap.to(window, {
 					duration: 0.5,
 					scrollTo: { y: y, autoKill: false },
 					ease: 'power3.out',
 					onStart: function() {
+						if (targetIndex === 0 || targetIndex === Number(maxSlide) - 1) {
+							console.log('hehe')
+							return;
+						}
 						countSpan.classList.remove('active');
 					},
 					onComplete: function() {
 						current = targetIndex;
 						countSpan.textContent = formatNumber(targetIndex + 1);
-						setTimeout(function() { locked = false; }, 1000);
+						setTimeout(function() { 
+							locked = false; 
+							isJumping = false; // Re-enable onUpdate
+						}, 1000);
 						countSpan.classList.add('active');
 					}
 				});
