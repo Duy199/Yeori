@@ -186,7 +186,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				locked = true;
 				isJumping = true; // Prevent onUpdate interference
 				gsap.to(window, {
-					duration: 1,
+					duration: 0.5,
 					scrollTo: { y: y, autoKill: false },
 					ease: 'power3.out',
 					onStart: function() {
@@ -214,6 +214,8 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					onDown: function() { 
 						// If at last slide, allow scroll to continue to about-us section
 						if (current >= steps) {
+							touchTime = 0; // Reset touchTime when leaving section downward
+							console.log('Leaving last slide downward, touchTime reset to 0');
 							obs.disable();
 							setTimeout(function() { obs.enable(); }, 1000);
 							return;
@@ -228,6 +230,8 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					onUp: function() { 
 						// If at first slide, allow scroll to continue upward
 						if (current <= 0) {
+							touchTime = 0; // Reset touchTime when leaving section upward
+							console.log('Leaving first slide upward, touchTime reset to 0');
 							obs.disable();
 							setTimeout(function() { obs.enable(); }, 1000);
 							return;
