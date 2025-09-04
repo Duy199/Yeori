@@ -98,26 +98,30 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					}
 				?>
 					<section class="panel p<?php echo ($i+1); ?>" style="<?php echo $bg_style; ?>">
-						<div class="video-section">
-							<?php if ($video_url): ?>
-								<video autoplay muted loop>
-									<source src="<?php echo esc_url($video_url); ?>" type="video/mp4">
-									Your browser does not support the video tag.
-								</video>
-							<?php endif; ?>
-						</div>
-						<div class="panel-content-top">
-							<h4 class="title">✧ Highlights công nghệ ✧</h4>
-							<div class="big-description">
+						<div class="panel-detail">
+							<div class="panel-content-1">
 								<h1 class="atext atext-slow"><?php echo esc_html($slide['heading']); ?></h1>
+								<div class="mouse">
+									mouse
+								</div>
+							</div>
+							<div class="panel-content-2">
+								<h4 class="title">✧ Highlights công nghệ ✧</h4>
+								<?php if ($video_url): ?>
+									<div class="video-section">
+										<video autoplay muted loop>
+											<source src="<?php echo esc_url($video_url); ?>" type="video/mp4">
+											Your browser does not support the video tag.
+										</video>
+									</div>
+								<?php endif; ?>
+							</div>
+							<div class="panel-content-3">
 								<div class="count-section koho">
 									<span class="num atext atext-slow">0<?php echo ($i+1); ?></span><span class="max">/0<?php echo esc_html($maxSlide); ?></span>
 								</div>
+								<p class="atext atext-slow"><?php echo esc_html($slide['content']); ?></p>
 							</div>
-						</div>
-						<div class="panel-content">
-							<h1 class="atext atext-slow"><?php echo esc_html($slide['heading']); ?></h1>
-							<p class="atext atext-slow"><?php echo esc_html($slide['content']); ?></p>
 						</div>
 					</section>
 				<?php endforeach; ?>

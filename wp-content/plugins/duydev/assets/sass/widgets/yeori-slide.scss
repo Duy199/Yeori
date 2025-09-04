@@ -6,45 +6,59 @@
     display: flex;
     color: #fff !important;
     width: 100vw;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    .video-section {
-        position: absolute; 
-        top: 50%; 
-        left: 50%; 
-        transform: translate(-50%, -50%); 
-        z-index: 1;
-        border-radius: 50%;
-        padding: 30px;
-        background: rgba(240, 247, 254, 0.6);
-        // backdrop-filter: blur(40px);
-        video {
-            width: 314px; 
-            height: 314px; 
-            object-fit: cover; 
-            border-radius: 50%;
-        }
-    }
-    .panel-content-top {
-        margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    .panel-detail {
         max-width: 1200px;
         width: 100%;
+        display: flex;
+        justify-content: space-between;
         padding: 0px 20px;
-        @media(min-width: 1920px) {
-            max-width: 1440px;
-        }
+    }
+    .panel-content-1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 100px;
+        margin-bottom: 100px;
+        width: 20%;
+        flex-grow: 1;
+    }
+    .panel-content-2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 71px;
+        // width: 30%;
+        // flex-grow: 1;
         .title {
             text-align: center;
         }
-        .big-description {
+        .video-section {
+            padding: 30px;
+            background: rgba(240, 247, 254, 0.6);
+            // backdrop-filter: blur(40px);
+            flex-shrink: 0;
+            border-radius: 50%;
+            video {
+                width: 314px; 
+                height: 314px; 
+                object-fit: cover; 
+                border-radius: 50%;
+            }
+        }
+    }
+    .panel-content-3 {
+        color: #fff !important; 
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
+        margin-top: 100px;
+        margin-bottom: 100px;
+        width: 20%;
+        flex-grow: 1;
+        align-items: flex-end;
         .count-section {
-            // position: absolute; 
-            top: 16%; 
-            right: 5%;
             font-weight: 600; 
             z-index: 10;
             overflow: hidden;
@@ -76,16 +90,5 @@
                 opacity: 1;
             }
         }
-    }
-    }
-    .panel-content {
-        color: #fff !important; 
-        max-width: 1200px;
-        width: 100%;
-        padding: 0px 20px;
-        margin-bottom: 100px;
-        @media(min-width: 1920px) {
-            max-width: 1440px;
-        }
-    }
+    }  
 }
