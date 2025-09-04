@@ -200,8 +200,24 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					preventDefault: true,
 					tolerance: 14,
 					wheelSpeed: 1,
-					onDown: function() { gotoIndex(current + 1); },
-					onUp: function() { gotoIndex(current - 1); }
+					onDown: function() { 
+						// If at last slide, allow scroll to continue to about-us section
+						if (current >= steps) {
+							obs.disable();
+							setTimeout(function() { obs.enable(); }, 1000);
+							return;
+						}
+						gotoIndex(current + 1); 
+					},
+					onUp: function() { 
+						// If at first slide, allow scroll to continue upward
+						if (current <= 0) {
+							obs.disable();
+							setTimeout(function() { obs.enable(); }, 1000);
+							return;
+						}
+						gotoIndex(current - 1); 
+					}
 				});
 				
 				window.addEventListener('load', function() { ScrollTrigger.refresh(); });
