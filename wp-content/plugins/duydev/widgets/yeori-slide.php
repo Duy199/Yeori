@@ -132,6 +132,50 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				<?php endforeach; ?>
 			</div>
 		</div>
+		<!-- <style>
+			/* Force container elements to not clip the spacer */
+			.elementor-element-<?php echo $this->get_id(); ?>,
+			.elementor-element-<?php echo $this->get_id(); ?> .smooth-wrapper {
+				overflow: visible !important;
+			}
+			
+			/* Horizontal scroll styles for mobile */
+			@media (max-width: 1023px) {
+				html, body {
+					overflow-x: hidden;
+				}
+				
+				.horizontal-scroll {
+					display: flex !important;
+					flex-wrap: nowrap !important;
+					touch-action: none; /* Prevent default touch behaviors */
+				}
+				
+				.horizontal-scroll .panel {
+					flex: 0 0 100vw;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					box-sizing: border-box;
+					transform: none !important; /* Prevent transforms on individual panels */
+					will-change: transform; /* Optimize for animations */
+				}
+				
+				.horizontal-scroll .panel-detail {
+					width: 100%;
+					padding: 1rem;
+					opacity: 1;
+					transition: opacity 0.3s ease;
+				}
+				
+				/* Ensure section after the slider is visible */
+				.elementor-element-<?php echo $this->get_id(); ?> + section {
+					visibility: visible !important;
+					display: block !important;
+					opacity: 1 !important;
+				}
+			}
+		</style> -->
 		<script>
 		const maxSlide = "<?php echo esc_js( $maxSlide ); ?>";
 		(function($){
@@ -155,61 +199,117 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				var isMobile = window.innerWidth < 1024;
 				
 				if (isMobile) {
-					// Mobile/Tablet: Original panel animation but with all panels visible
-					console.log('Mobile mode: Original panel animation with fixed last panel');
+					// Mobile: Horizontal scroll with pin control similar to the YouTube reference
+					console.log('Mobile mode: Using horizontal scroll with pin control');
 					
-					// Clear any existing ScrollTriggers to be safe
-					ScrollTrigger.getAll().forEach(function(st) {
-						st.kill();
+					// Clear any existing ScrollTriggers
+					ScrollTrigger.getAll().forEach(function(st) { st.kill(); });
+					
+					// Add a class to help with styling
+					container.classList.add('horizontal-scroll');
+					
+					// Calculate the section height to ensure proper space is reserved
+					const sectionHeight = window.innerHeight;
+					
+					// Style the container and panels for horizontal scrolling
+					gsap.set(container, { 
+						width: (panels.length * 100) + 'vw',
+						height: sectionHeight + 'px',
+						display: 'flex',
+						position: 'relative'
 					});
 					
-					// Create a separate timeline for the last panel to ensure it's visible
-					var lastPanelTimeline;
+					// Set each panel to full viewport width
+					gsap.set(panels, {
+						width: '100vw',
+						height: '100%'
+					});
 					
-					// Pin all panels
-					panels.forEach(function(panel, index) {
-						// Special handling for last panel
-						if (index === panels.length - 1) {
-							// Pin the last panel but with a special end marker to allow scrolling past
-							var lastTrigger = ScrollTrigger.create({
-								trigger: panel,
-								start: 'top top',
-								endTrigger: panel,
-								end: 'bottom top',
-								pin: true,
-								pinSpacing: false,
-								markers: false,
-								onLeaveBack: function() {
-									console.log('Scrolling back from last panel');
-								},
-								onLeave: function() {
-									console.log('Leaving last panel downward');
-									// Kill the pin when scrolling past to allow next section
-									lastTrigger.kill();
+					// Create the horizontal scroll animation with pin
+					const horizontalScroll = gsap.timeline({
+						scrollTrigger: {
+							trigger: container,
+							start: 'top top',
+							end: () => '+=' + (container.scrollWidth - window.innerWidth),
+							pin: true,
+							anticipatePin: 1,
+							scrub: 0.8,
+							invalidateOnRefresh: true,
+							snap: {
+								snapTo: 1/(panels.length-1),
+								duration: {min: 0.2, max: 0.5},
+								delay: 0.1,
+								ease: 'power1.inOut'
+							},
+							onLeaveBack: () => {
+								console.log('Entering horizontal scroll section from above');
+							},
+							onLeave: () => {
+								console.log('Leaving horizontal scroll section - should see About Us section next');
+							},
+							pinSpacing: true,
+							markers: false
+						}
+					});
+					
+					// Add the horizontal movement
+					horizontalScroll.to(container, {
+						x: () => -(container.scrollWidth - window.innerWidth),
+						ease: 'none'
+					});
+					
+					// Add animations for each panel's content
+					panels.forEach((panel, i) => {
+						// Get text elements in this panel
+						const texts = panel.querySelectorAll('.atext');
+						
+						// Create a trigger point for this panel
+						const trigger = i / (panels.length - 1);
+						
+						// Animate text elements when panel is in view
+						gsap.fromTo(texts, 
+							{ opacity: 0, y: 30 },
+							{ 
+								opacity: 1, 
+								y: 0, 
+								duration: 0.8, 
+								stagger: 0.1,
+								scrollTrigger: {
+									trigger: panel,
+									containerAnimation: horizontalScroll,
+									start: 'left center',
+									toggleActions: 'play none none reverse'
 								}
-							});
-						} else {
-							// Regular pins for all other panels
-							ScrollTrigger.create({
-								trigger: panel,
-								start: 'top top',
-								end: '+=100%',
-								pin: true,
-								pinSpacing: false,
-								markers: false
-							});
-						}
+							}
+						);
 					});
 					
-					// Add simple snap with specific sections
-					ScrollTrigger.create({
-						snap: {
-							snapTo: panels.map((_, i) => i / (panels.length - 1)),
-							duration: 0.3,
-							delay: 0.1,
-							ease: "power1.inOut"
+					// Helper function to find the "About Us" section or any section after this widget
+					function findNextSection() {
+						let nextSection = container.parentNode;
+						while (nextSection && nextSection.nextElementSibling) {
+							nextSection = nextSection.nextElementSibling;
+							// Check if this is a section element
+							if (nextSection.tagName === 'SECTION' || 
+								nextSection.classList.contains('elementor-section')) {
+								return nextSection;
+							}
 						}
-					});
+						return null;
+					}
+					
+					// Make sure the About Us section is visible after scrolling through all panels
+					const nextSection = findNextSection();
+					if (nextSection) {
+						console.log('Found next section after slide widget:', nextSection);
+						
+						// Make sure no CSS is hiding the next section
+						gsap.set(nextSection, { 
+							visibility: 'visible',
+							display: 'block',
+							opacity: 1
+						});
+					}
 					
 				} else {
 					// Desktop: Full scroll animation experience
@@ -305,10 +405,9 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						onDown: function() { 
 							// If at last slide, allow scroll to continue to about-us section
 							if (current >= steps) {
-								touchTime = 0; // Reset touchTime when leaving section downward
-								console.log('Leaving last slide downward, touchTime reset to 0');
+								// At last panel: allow natural page scrolling
 								obs.disable();
-								setTimeout(function() { obs.enable(); }, 1000);
+								setTimeout(function() { obs.enable(); }, 400); // enough time for 1-2 scroll notches to exit
 								return;
 							}
 							if (current === 0 && touchTime === 0) {
@@ -321,10 +420,8 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						onUp: function() { 
 							// If at first slide, allow scroll to continue upward
 							if (current <= 0) {
-								touchTime = 0; // Reset touchTime when leaving section upward
-								console.log('Leaving first slide upward, touchTime reset to 0');
 								obs.disable();
-								setTimeout(function() { obs.enable(); }, 1000);
+								setTimeout(function() { obs.enable(); }, 400);
 								return;
 							}
 							if (current === maxSlide - 1 && touchTime === 0) {
