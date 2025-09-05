@@ -87,7 +87,8 @@ class DuyDev {
         wp_enqueue_script('gsap-scrolltrigger', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.6/ScrollTrigger.min.js', array('gsap'), null, true);
         wp_enqueue_script('gsap-scrollto', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.6/ScrollToPlugin.min.js', array('gsap'), null, true);
         wp_enqueue_script('gsap-observer', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.6/Observer.min.js', array('gsap'), null, true);
-        wp_enqueue_script('gsap-splittext', 'https://assets.codepen.io/16327/SplitText3.min.js', array('gsap'), null, true);
+        wp_enqueue_script('gsap-splittext','https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.6/SplitText.min.js',array('gsap'),null,true);
+
         
         // // Register AText animation
         // wp_register_style('atext-css', plugins_url('assets/css/atext.css', __FILE__));

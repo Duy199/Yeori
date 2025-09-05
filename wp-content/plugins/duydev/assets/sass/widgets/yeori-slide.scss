@@ -126,6 +126,9 @@
                 font-size: 12.5rem;
                 line-height: 1.10;
                 letter-spacing: -4px;
+                @media(max-width: 1024px) {
+                    font-size: 8rem;
+                }
             }
             .max {
                 font-size: 3rem;
