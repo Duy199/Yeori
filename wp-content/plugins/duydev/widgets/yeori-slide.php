@@ -100,7 +100,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					<section class="panel p<?php echo ($i+1); ?>" style="<?php echo $bg_style; ?>">
 						<div class="panel-detail">
 							<div class="panel-content-1">
-								<h1 class="atext atext-slow"><?php echo esc_html($slide['heading']); ?></h1>
+								<h1 class="slide-text"><?php echo esc_html($slide['heading']); ?></h1>
 								<div class="mouse">
 									mouse
 								</div>
@@ -123,9 +123,9 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 							</div>
 							<div class="panel-content-3">
 								<div class="count-section koho">
-									<span class="num atext atext-slow">0<?php echo ($i+1); ?></span><span class="max">/0<?php echo esc_html($maxSlide); ?></span>
+									<span class="num slide-text">0<?php echo ($i+1); ?></span><span class="max">/0<?php echo esc_html($maxSlide); ?></span>
 								</div>
-								<p class="atext atext-slow"><?php echo esc_html($slide['content']); ?></p>
+								<p class="slide-text"><?php echo esc_html($slide['content']); ?></p>
 							</div>
 						</div>
 					</section>
@@ -217,7 +217,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					// Add animations for each panel's content
 					panels.forEach((panel, i) => {
 						// Get text elements in this panel
-						const texts = panel.querySelectorAll('.atext');
+						const texts = panel.querySelectorAll('.slide-text');
 						
 						// Create a trigger point for this panel
 						const trigger = i / (panels.length - 1);
@@ -270,6 +270,27 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				} else {
 					// Desktop: Full scroll animation experience
 					console.log('Desktop mode: Using full scroll animation');
+					
+					// Add text animations for each panel
+					panels.forEach((panel, i) => {
+						const texts = panel.querySelectorAll('.slide-text');
+						
+						// Animate text elements when panel comes into view
+						gsap.fromTo(texts, 
+							{ opacity: 0, y: 30 },
+							{ 
+								opacity: 1, 
+								y: 0, 
+								duration: 0.8, 
+								stagger: 0.1,
+								scrollTrigger: {
+									trigger: panel,
+									start: 'top center',
+									toggleActions: 'play none none reverse'
+								}
+							}
+						);
+					});
 					
 					// Function to format numbers with leading zero
 					function formatNumber(num) {
