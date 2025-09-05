@@ -151,127 +151,198 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				var panels = gsap.utils.toArray('#<?php echo esc_js($uid); ?> .panel');
 				var steps = Math.max(0, panels.length - 1);
 				
-				// Function to format numbers with leading zero
-				function formatNumber(num) {
-					return num < 10 ? '0' + num : num.toString();
+				// Check if screen is below 1024px
+				var isMobile = window.innerWidth < 1024;
+				
+				if (isMobile) {
+					// Mobile/Tablet: Original panel animation but with all panels visible
+					console.log('Mobile mode: Original panel animation with fixed last panel');
+					
+					// Clear any existing ScrollTriggers to be safe
+					ScrollTrigger.getAll().forEach(function(st) {
+						st.kill();
+					});
+					
+					// Create a separate timeline for the last panel to ensure it's visible
+					var lastPanelTimeline;
+					
+					// Pin all panels
+					panels.forEach(function(panel, index) {
+						// Special handling for last panel
+						if (index === panels.length - 1) {
+							// Pin the last panel but with a special end marker to allow scrolling past
+							var lastTrigger = ScrollTrigger.create({
+								trigger: panel,
+								start: 'top top',
+								endTrigger: panel,
+								end: 'bottom top',
+								pin: true,
+								pinSpacing: false,
+								markers: false,
+								onLeaveBack: function() {
+									console.log('Scrolling back from last panel');
+								},
+								onLeave: function() {
+									console.log('Leaving last panel downward');
+									// Kill the pin when scrolling past to allow next section
+									lastTrigger.kill();
+								}
+							});
+						} else {
+							// Regular pins for all other panels
+							ScrollTrigger.create({
+								trigger: panel,
+								start: 'top top',
+								end: '+=100%',
+								pin: true,
+								pinSpacing: false,
+								markers: false
+							});
+						}
+					});
+					
+					// Add simple snap with specific sections
+					ScrollTrigger.create({
+						snap: {
+							snapTo: panels.map((_, i) => i / (panels.length - 1)),
+							duration: 0.3,
+							delay: 0.1,
+							ease: "power1.inOut"
+						}
+					});
+					
+				} else {
+					// Desktop: Full scroll animation experience
+					console.log('Desktop mode: Using full scroll animation');
+					
+					// Function to format numbers with leading zero
+					function formatNumber(num) {
+						return num < 10 ? '0' + num : num.toString();
+					}
+					
+					// Variables for state management
+					var current = 0;
+					var locked = false;
+					var isJumping = false; // Flag to prevent onUpdate interference during jumps
+					var touchTime = 0;
+					
+					// Pin container and animate panels
+					var tl = gsap.timeline({
+						scrollTrigger: {
+							trigger: container,
+							start: 'top top',
+							end: function() { return '+=' + steps * window.innerHeight; },
+							pin: true,
+							scrub: true,
+							markers: false,
+							onUpdate: function(self) {
+								if (steps <= 0 || isJumping) return;
+								current = Math.round(self.progress * steps);
+							},
+							onLeave: function() {
+								touchTime = 0;
+								console.log('onLeave, touchTime reset to 0');
+							},
+							onLeaveBack: function() {
+								touchTime = 0;
+								console.log('onLeaveBack, touchTime reset to 0');
+							}
+						}
+					});
+					if (steps > 0) tl.to(panels, { yPercent: -100 * steps, ease: 'none' });
+					
+					var st = tl.scrollTrigger;
+					
+					// Calculate positions for each section
+					var positions = [];
+					var computePositions = function() {
+						if (!st) return;
+						var start = st.start || 0;
+						var end = st.end || start + 1;
+						positions = panels.map(function(_, i) {
+							return start + (end - start) * (steps ? i / steps : 0);
+						});
+					};
+					computePositions();
+					ScrollTrigger.addEventListener('refresh', computePositions);
+					window.addEventListener('resize', computePositions);
+					
+					// Jump to index logic
+					var gotoIndex = function(index) {
+						if (locked || steps <= 0) return;
+						var targetIndex = gsap.utils.clamp(0, steps, index);
+						var y = positions[targetIndex];
+						if (!Number.isFinite(y)) return;
+						
+						locked = true;
+						isJumping = true; // Prevent onUpdate interference
+						gsap.to(window, {
+							duration: 0.5,
+							scrollTo: { y: y, autoKill: false },
+							ease: 'power3.out',
+							onStart: function() {
+								if (targetIndex === 0 || targetIndex === Number(maxSlide) - 1) {
+									return;
+								}
+							},
+							onComplete: function() {
+								current = targetIndex;
+								setTimeout(function() { 
+									locked = false; 
+									isJumping = false; // Re-enable onUpdate
+								}, 1000);
+							}
+						});
+					};
+					
+					// Observer for wheel/touch gestures (desktop only)
+					var obs = Observer.create({
+						target: window,
+						type: 'wheel,touch,pointer',
+						preventDefault: true,
+						tolerance: 14,
+						wheelSpeed: 1,
+						onDown: function() { 
+							// If at last slide, allow scroll to continue to about-us section
+							if (current >= steps) {
+								touchTime = 0; // Reset touchTime when leaving section downward
+								console.log('Leaving last slide downward, touchTime reset to 0');
+								obs.disable();
+								setTimeout(function() { obs.enable(); }, 1000);
+								return;
+							}
+							if (current === 0 && touchTime === 0) {
+								++touchTime;
+								gotoIndex(current); 
+								return;
+							}
+							gotoIndex(current + 1); 
+						},
+						onUp: function() { 
+							// If at first slide, allow scroll to continue upward
+							if (current <= 0) {
+								touchTime = 0; // Reset touchTime when leaving section upward
+								console.log('Leaving first slide upward, touchTime reset to 0');
+								obs.disable();
+								setTimeout(function() { obs.enable(); }, 1000);
+								return;
+							}
+							if (current === maxSlide - 1 && touchTime === 0) {
+								++touchTime;
+								gotoIndex(current);
+								return;
+							}
+							gotoIndex(current - 1); 
+						}
+					});
 				}
 				
-				// Variables for state management
-				var current = 0;
-				var locked = false;
-				var isJumping = false; // Flag to prevent onUpdate interference during jumps
-				var touchTime = 0;
-				
-				// Pin container and animate panels
-				var tl = gsap.timeline({
-					scrollTrigger: {
-						trigger: container,
-						start: 'top top',
-						end: function() { return '+=' + steps * window.innerHeight; },
-						pin: true,
-						scrub: true,
-						markers: true,
-						onUpdate: function(self) {
-							if (steps <= 0 || isJumping) return;
-							current = Math.round(self.progress * steps);
-						},
-						onLeave: function() {
-							touchTime = 0;
-							console.log('onLeave, touchTime reset to 0');
-						},
-						onLeaveBack: function() {
-							touchTime = 0;
-							console.log('onLeaveBack, touchTime reset to 0');
-						}
-					}
-				});
-			if (steps > 0) tl.to(panels, { yPercent: -100 * steps, ease: 'none' });
-			
-			var st = tl.scrollTrigger;
-			
-			// Calculate positions for each section
-			var positions = [];
-			var computePositions = function() {
-				if (!st) return;
-				var start = st.start || 0;
-				var end = st.end || start + 1;
-				positions = panels.map(function(_, i) {
-					return start + (end - start) * (steps ? i / steps : 0);
-				});
-			};
-			computePositions();
-			ScrollTrigger.addEventListener('refresh', computePositions);
-			window.addEventListener('resize', computePositions);
-			
-			// Jump to index logic
-			var current = 0;
-			var locked = false;
-	
-			var gotoIndex = function(index) {
-				if (locked || steps <= 0) return;
-				var targetIndex = gsap.utils.clamp(0, steps, index);
-				var y = positions[targetIndex];
-				if (!Number.isFinite(y)) return;
-				
-				locked = true;
-				isJumping = true; // Prevent onUpdate interference
-				gsap.to(window, {
-					duration: 0.5,
-					scrollTo: { y: y, autoKill: false },
-					ease: 'power3.out',
-					onStart: function() {
-						if (targetIndex === 0 || targetIndex === Number(maxSlide) - 1) {
-							return;
-						}
-					},
-					onComplete: function() {
-						current = targetIndex;
-						setTimeout(function() { 
-							locked = false; 
-							isJumping = false; // Re-enable onUpdate
-						}, 1000);
-					}
-				});
-			};
-			
-			// Observer for wheel/touch gestures
-				var obs = Observer.create({
-					target: window,
-					type: 'wheel,touch,pointer',
-					preventDefault: true,
-					tolerance: 14,
-					wheelSpeed: 1,
-					onDown: function() { 
-						// If at last slide, allow scroll to continue to about-us section
-						if (current >= steps) {
-							touchTime = 0; // Reset touchTime when leaving section downward
-							console.log('Leaving last slide downward, touchTime reset to 0');
-							obs.disable();
-							setTimeout(function() { obs.enable(); }, 1000);
-							return;
-						}
-						if (current === 0 && touchTime === 0) {
-							++touchTime;
-							gotoIndex(current); 
-							return;
-						}
-						gotoIndex(current + 1); 
-					},
-					onUp: function() { 
-						// If at first slide, allow scroll to continue upward
-						if (current <= 0) {
-							touchTime = 0; // Reset touchTime when leaving section upward
-							console.log('Leaving first slide upward, touchTime reset to 0');
-							obs.disable();
-							setTimeout(function() { obs.enable(); }, 1000);
-							return;
-						}
-						if (current === maxSlide - 1 && touchTime === 0) {
-							++touchTime;
-							gotoIndex(current);
-							return;
-						}
-						gotoIndex(current - 1); 
+				// Handle window resize to switch between modes
+				window.addEventListener('resize', function() {
+					var newIsMobile = window.innerWidth < 1024;
+					if (newIsMobile !== isMobile) {
+						// Screen size changed, reload to apply correct mode
+						location.reload();
 					}
 				});
 				
