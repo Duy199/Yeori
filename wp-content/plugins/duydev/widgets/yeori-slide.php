@@ -132,50 +132,6 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				<?php endforeach; ?>
 			</div>
 		</div>
-		<!-- <style>
-			/* Force container elements to not clip the spacer */
-			.elementor-element-<?php echo $this->get_id(); ?>,
-			.elementor-element-<?php echo $this->get_id(); ?> .smooth-wrapper {
-				overflow: visible !important;
-			}
-			
-			/* Horizontal scroll styles for mobile */
-			@media (max-width: 1023px) {
-				html, body {
-					overflow-x: hidden;
-				}
-				
-				.horizontal-scroll {
-					display: flex !important;
-					flex-wrap: nowrap !important;
-					touch-action: none; /* Prevent default touch behaviors */
-				}
-				
-				.horizontal-scroll .panel {
-					flex: 0 0 100vw;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					box-sizing: border-box;
-					transform: none !important; /* Prevent transforms on individual panels */
-					will-change: transform; /* Optimize for animations */
-				}
-				
-				.horizontal-scroll .panel-detail {
-					width: 100%;
-					padding: 1rem;
-					opacity: 1;
-					transition: opacity 0.3s ease;
-				}
-				
-				/* Ensure section after the slider is visible */
-				.elementor-element-<?php echo $this->get_id(); ?> + section {
-					visibility: visible !important;
-					display: block !important;
-					opacity: 1 !important;
-				}
-			}
-		</style> -->
 		<script>
 		const maxSlide = "<?php echo esc_js( $maxSlide ); ?>";
 		(function($){
