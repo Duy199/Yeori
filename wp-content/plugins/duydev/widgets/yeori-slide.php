@@ -129,7 +129,15 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 									<p class="num slide-text">0<?php echo ($i+1); ?></p>
 									<p class="max">/0<?php echo esc_html($maxSlide); ?></p>
 								</div>
-								<p class="slide-text content"><?php echo esc_html($slide['content']); ?></p>
+								<div class="content-wrapper">
+									<p class="slide-text content"><?php echo esc_html($slide['content']); ?></p>
+									<a href="" class="button-link">
+										<span>Tìm hiểu thêm</span>
+										<div class="vector">
+											<img src="<?php echo DUYDEV_PLUGIN_IMG . 'Icon.svg'; ?>" alt="vector-link">
+										</div>
+									</a>
+								</div>
 							</div>
 						</div>
 					</section>

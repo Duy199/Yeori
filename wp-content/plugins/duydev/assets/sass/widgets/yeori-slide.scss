@@ -13,6 +13,14 @@
     .title {
         margin: 0;
         padding-top: 71px;
+        font-size: 1.5rem;
+        line-height: 1.33;
+        letter-spacing: -0.2px;
+        opacity: 0.7;
+        @media(max-width: 767px) {
+            display: none;
+            padding: 0;
+        }
     }
     .panel-detail {
         max-width: 1400px;
@@ -27,10 +35,11 @@
         }
         @media(max-width: 1400px) {
             padding: 0px 20px;
+            padding-bottom: 100px;
         }
         @media(max-width: 767px) {
             flex-direction: column;
-            padding: 0;
+            padding: 71px 0px;
         }
     }
     .panel-content-1 {
@@ -49,7 +58,7 @@
             margin: 0;
             width: 100%;
             @media(max-width: 1024px) {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
             @media(max-width: 767px) {
                 margin-top: 0;
@@ -130,6 +139,14 @@
                     height: 344px; 
                     object-fit: cover; 
                     border-radius: 50%;
+                    @media(min-width: 1920px) {
+                        width: 344px;
+                        height: 344px;
+                    }
+                    @media(max-width: 1024px) {
+                        width: 257px;
+                        height: 257px;
+                    }
                     @media(max-width: 767px) {
                         width: 257px;
                         height: 257px;
@@ -185,13 +202,42 @@
             flex-grow: 0;
             padding: 0px 20px;
         }
-        .content {
-            font-weight: 400;
-            line-height: 1.44;
-            font-size: 18px;
-            letter-spacing: 0px;
-            @media(max-width: 767px) {
-                font-size: 16px;
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            .content {
+                font-weight: 400;
+                line-height: 1.44;
+                font-size: 18px;
+                letter-spacing: 0px;
+                @media(max-width: 767px) {
+                    font-size: 16px;
+                }
+            }
+            .button-link {
+                display: flex;
+                justify-content: space-between;
+                background-color: #fff;
+                border-radius: 99px;
+                align-items: center;
+                padding: 12px;
+                width: 300px;
+                span {
+                    font-size: 18px;
+                    letter-spacing: 0px;
+                    line-height: 1.33;
+                    color: #33479D;
+                }
+                .vector {
+                    width: 40px;
+                    height: 40px;
+                    background-color: #33479D;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                }
             }
         }
         .count-section {
