@@ -219,25 +219,48 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						// Get text elements in this panel
 						const texts = panel.querySelectorAll('.slide-text');
 						
-						// Create a trigger point for this panel
-						const trigger = i / (panels.length - 1);
+						// Set up CSS transitions and initial state
+						texts.forEach((text, index) => {
+							text.style.transition = `opacity 0.8s ease-out ${index * 0.1}s, transform 0.8s ease-out ${index * 0.1}s`;
+							text.style.opacity = '0';
+							text.style.transform = 'translateY(30px)';
+						});
 						
 						// Animate text elements when panel is in view
-						gsap.fromTo(texts, 
-							{ opacity: 0, y: 30 },
-							{ 
-								opacity: 1, 
-								y: 0, 
-								duration: 0.8, 
-								stagger: 0.1,
-								scrollTrigger: {
-									trigger: panel,
-									containerAnimation: horizontalScroll,
-									start: 'left center',
-									toggleActions: 'play none none reverse'
-								}
+						ScrollTrigger.create({
+							trigger: panel,
+							containerAnimation: horizontalScroll,
+							start: 'left center',
+							end: 'right center',
+							onEnter: () => {
+								// Animate in with CSS transitions
+								texts.forEach(text => {
+									text.style.opacity = '1';
+									text.style.transform = 'translateY(0px)';
+								});
+							},
+							onLeave: () => {
+								// Animate out with CSS transitions
+								texts.forEach(text => {
+									text.style.opacity = '0';
+									text.style.transform = 'translateY(30px)';
+								});
+							},
+							onEnterBack: () => {
+								// Animate in when coming back
+								texts.forEach(text => {
+									text.style.opacity = '1';
+									text.style.transform = 'translateY(0px)';
+								});
+							},
+							onLeaveBack: () => {
+								// Animate out when leaving back
+								texts.forEach(text => {
+									text.style.opacity = '0';
+									text.style.transform = 'translateY(30px)';
+								});
 							}
-						);
+						});
 					});
 					
 					// Helper function to find the "About Us" section or any section after this widget
@@ -275,21 +298,47 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					panels.forEach((panel, i) => {
 						const texts = panel.querySelectorAll('.slide-text');
 						
-						// Animate text elements when panel comes into view
-						gsap.fromTo(texts, 
-							{ opacity: 0, y: 30 },
-							{ 
-								opacity: 1, 
-								y: 0, 
-								duration: 0.8, 
-								stagger: 0.1,
-								scrollTrigger: {
-									trigger: panel,
-									start: 'top center',
-									toggleActions: 'play none none reverse'
-								}
+						// Set up CSS transitions and initial state
+						texts.forEach((text, index) => {
+							text.style.transition = `opacity 0.8s ease-out ${index * 0.1}s, transform 0.8s ease-out ${index * 0.1}s`;
+							text.style.opacity = '0';
+							text.style.transform = 'translateY(30px)';
+						});
+						
+						// Create ScrollTrigger for this panel's text animation
+						ScrollTrigger.create({
+							trigger: panel,
+							start: 'top center',
+							end: 'bottom center',
+							onEnter: () => {
+								// Animate in with CSS transitions
+								texts.forEach(text => {
+									text.style.opacity = '1';
+									text.style.transform = 'translateY(0px)';
+								});
+							},
+							onLeave: () => {
+								// Animate out with CSS transitions
+								texts.forEach(text => {
+									text.style.opacity = '0';
+									text.style.transform = 'translateY(30px)';
+								});
+							},
+							onEnterBack: () => {
+								// Animate in when coming back
+								texts.forEach(text => {
+									text.style.opacity = '1';
+									text.style.transform = 'translateY(0px)';
+								});
+							},
+							onLeaveBack: () => {
+								// Animate out when leaving back
+								texts.forEach(text => {
+									text.style.opacity = '0';
+									text.style.transform = 'translateY(30px)';
+								});
 							}
-						);
+						});
 					});
 					
 					// Function to format numbers with leading zero
