@@ -98,6 +98,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					}
 				?>
 					<section class="panel p<?php echo ($i+1); ?>" style="<?php echo $bg_style; ?>">
+						<p class="title">✧ Highlights công nghệ ✧</p>
 						<div class="panel-detail">
 							<div class="panel-content-1">
 								<h2 class="slide-text heading"><?php echo esc_html($slide['heading']); ?></h2>
@@ -108,7 +109,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 								<p class="title">✧ Highlights công nghệ ✧</p>
 							</div>
 							<div class="panel-content-2">
-								<p class="title">✧ Highlights công nghệ ✧</p>
+								<!-- <p class="title">✧ Highlights công nghệ ✧</p> -->
 								<?php if ($video_url): ?>
 									<div class="video-wrapper">
 										<div class="video-section">

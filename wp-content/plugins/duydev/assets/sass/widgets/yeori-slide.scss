@@ -7,12 +7,21 @@
     color: #fff !important;
     width: 100vw;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+    .title {
+        margin: 0;
+        padding-top: 71px;
+    }
     .panel-detail {
         max-width: 1400px;
         width: 100%;
         display: flex;
         justify-content: space-between;
+        gap: 44px;
+        height: 100%;
+        padding-bottom: 100px;
         @media(min-width: 1920px) {
             max-width: 1720px;
         }
@@ -27,7 +36,7 @@
     .panel-content-1 {
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
         // margin-top: 183px;
         // margin-bottom: 125px;
         width: 20%;
@@ -38,7 +47,7 @@
             line-height: 1.21;
             font-size: 3rem;
             margin: 0;
-            width: 95%;
+            width: 100%;
             @media(max-width: 1024px) {
                 font-size: 2.5rem;
             }
@@ -83,7 +92,9 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin-top: 71px;
+        padding-top: 36px;
+        // margin-top: 71px;
+        // margin-top: 183px;
         @media(max-width: 767px) {
             margin: 0;
             display: block;
@@ -100,6 +111,7 @@
         }
         .video-wrapper {
             width: 100%;
+            height: 100%;
             @media(max-width: 767px) {
                 display: flex;
                 padding-left: 20px;
@@ -127,7 +139,7 @@
             .line-wrapper {
                 position: relative;
                 transform: translateY(-0.5px);
-                height: 25vh;
+                height: 100%;
                 @media(max-width: 767px) {
                     height: auto;
                     transform: unset;
@@ -159,7 +171,7 @@
         color: #fff !important; 
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
         // margin-top: 183px;
         // margin-bottom: 125px;
         width: 20%;
