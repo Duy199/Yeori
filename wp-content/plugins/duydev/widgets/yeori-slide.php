@@ -125,7 +125,8 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 							</div>
 							<div class="panel-content-3">
 								<div class="count-section koho">
-									<span class="num slide-text">0<?php echo ($i+1); ?></span><span class="max">/0<?php echo esc_html($maxSlide); ?></span>
+									<p class="num slide-text">0<?php echo ($i+1); ?></p>
+									<p class="max">/0<?php echo esc_html($maxSlide); ?></p>
 								</div>
 								<p class="slide-text content"><?php echo esc_html($slide['content']); ?></p>
 							</div>
