@@ -34,7 +34,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					[
 						'name' => 'heading',
 						'label' => __('Heading', 'duydev'),
-						'type' => Controls_Manager::TEXT,
+						'type' => Controls_Manager::TEXTAREA,
 						'default' => __('Section Title', 'duydev'),
 					],
 					[
@@ -100,13 +100,15 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					<section class="panel p<?php echo ($i+1); ?>" style="<?php echo $bg_style; ?>">
 						<div class="panel-detail">
 							<div class="panel-content-1">
-								<h1 class="slide-text"><?php echo esc_html($slide['heading']); ?></h1>
+								<h2 class="slide-text heading"><?php echo esc_html($slide['heading']); ?></h2>
 								<div class="mouse">
-									mouse
+									<p>Tiếp tục cuộn chuột</p>
+									<img src="<?php echo DUYDEV_PLUGIN_IMG . 'Scroll Prompt.svg'; ?>" alt="mouse">
 								</div>
+								<p class="title">✧ Highlights công nghệ ✧</p>
 							</div>
 							<div class="panel-content-2">
-								<h4 class="title">✧ Highlights công nghệ ✧</h4>
+								<p class="title">✧ Highlights công nghệ ✧</p>
 								<?php if ($video_url): ?>
 									<div class="video-wrapper">
 										<div class="video-section">
@@ -125,7 +127,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 								<div class="count-section koho">
 									<span class="num slide-text">0<?php echo ($i+1); ?></span><span class="max">/0<?php echo esc_html($maxSlide); ?></span>
 								</div>
-								<p class="slide-text"><?php echo esc_html($slide['content']); ?></p>
+								<p class="slide-text content"><?php echo esc_html($slide['content']); ?></p>
 							</div>
 						</div>
 					</section>
@@ -152,7 +154,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				var steps = Math.max(0, panels.length - 1);
 				
 				// Check if screen is below 1024px
-				var isMobile = window.innerWidth < 1024;
+				var isMobile = window.innerWidth <= 1024;
 				
 				if (isMobile) {
 					// Mobile: Horizontal scroll with pin control similar to the YouTube reference
