@@ -375,20 +375,37 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 								panels.forEach((panel, i) => {
 									const texts = panel.querySelectorAll('.slide-text');
 									
-									// Calculate which panel should be active with better logic
-									const currentPanelIndex = Math.round(progress * (totalPanels - 1));
-									
-									// Show text when this is the current panel
-									if (i === currentPanelIndex) {
-										texts.forEach(text => {
-											text.style.opacity = '1';
-											text.style.transform = 'translateY(0px)';
-										});
+									// For special handling of slide 1 (index 1)
+									if (i === 1) {
+										// Slide 1 (index 1) should only show when progress is between 0.25 and 0.6
+										// This means it appears later and disappears earlier
+										if (progress > 0.25 && progress < 0.6) {
+											texts.forEach(text => {
+												text.style.opacity = '1';
+												text.style.transform = 'translateY(0px)';
+											});
+										} else {
+											texts.forEach(text => {
+												text.style.opacity = '0';
+												text.style.transform = 'translateY(30px)';
+											});
+										}
 									} else {
-										texts.forEach(text => {
-											text.style.opacity = '0';
-											text.style.transform = 'translateY(30px)';
-										});
+										// Other slides use the normal calculation
+										const currentPanelIndex = Math.round(progress * (totalPanels - 1));
+										
+										// Show text when this is the current panel
+										if (i === currentPanelIndex) {
+											texts.forEach(text => {
+												text.style.opacity = '1';
+												text.style.transform = 'translateY(0px)';
+											});
+										} else {
+											texts.forEach(text => {
+												text.style.opacity = '0';
+												text.style.transform = 'translateY(30px)';
+											});
+										}
 									}
 								});
 							}
