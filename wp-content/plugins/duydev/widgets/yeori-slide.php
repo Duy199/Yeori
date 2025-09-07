@@ -32,6 +32,12 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 				'type' => Controls_Manager::REPEATER,
 				'fields' => [
 					[
+						'name' => 'highlights',
+						'label' => __('Highlights', 'duydev'),
+						'type' => Controls_Manager::TEXTAREA,
+						'default' => __('✧ Highlights công nghệ ✧', 'duydev'),
+					],
+					[
 						'name' => 'heading',
 						'label' => __('Heading', 'duydev'),
 						'type' => Controls_Manager::TEXTAREA,
@@ -68,10 +74,10 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					],
 				],
 				'default' => [
-					[ 'heading' => 'Section 1', 'content' => 'Scroll (vuốt) 1 phát là nhảy section', 'background' => '#1e293b' ],
-					[ 'heading' => 'Section 2', 'content' => 'GSAP + Observer + ScrollTo', 'background' => '#0ea5e9' ],
-					[ 'heading' => 'Section 3', 'content' => 'Không dính scroll, không double-jump', 'background' => '#10b981' ],
-					[ 'heading' => 'Section 4', 'content' => 'Kết thúc demo', 'background' => '#f59e0b' ],
+					[ 'highlights' => 'Technology', 'heading' => 'Section 1', 'content' => 'Scroll (vuốt) 1 phát là nhảy section', 'background' => '#1e293b' ],
+					[ 'highlights' => 'Technology', 'heading' => 'Section 2', 'content' => 'GSAP + Observer + ScrollTo', 'background' => '#0ea5e9' ],
+					[ 'highlights' => 'Technology', 'heading' => 'Section 3', 'content' => 'Không dính scroll, không double-jump', 'background' => '#10b981' ],
+					[ 'highlights' => 'Technology', 'heading' => 'Section 4', 'content' => 'Kết thúc demo', 'background' => '#f59e0b' ],
 				],
 			]
 		);
@@ -98,7 +104,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					}
 				?>
 					<section class="panel p<?php echo ($i+1); ?>" style="<?php echo $bg_style; ?>">
-						<p class="title">✧ Highlights công nghệ ✧</p>
+						<p class="title"><?php echo $slide['highlights']; ?></p>
 						<div class="panel-detail">
 							<div class="panel-content-1">
 								<div class="heading-wrapper">
@@ -109,7 +115,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 									<p>Tiếp tục cuộn chuột</p>
 									<img src="<?php echo DUYDEV_PLUGIN_IMG . 'Scroll Prompt.svg'; ?>" alt="mouse">
 								</div>
-								<p class="title">✧ Highlights công nghệ ✧</p>
+								<p class="title"><?php echo $slide['hightlights']; ?></p>
 							</div>
 							<div class="panel-content-2">
 								<?php if ($video_url): ?>
