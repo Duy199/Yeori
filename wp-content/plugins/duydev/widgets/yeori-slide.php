@@ -320,171 +320,89 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 					}
 					
 				} else {
-					// Desktop: Full scroll animation experience
-					console.log('Desktop mode: Using full scroll animation');
+					// Desktop: Stacked cards animation (like the HTML example)
+					console.log('Desktop mode: Using stacked cards animation');
 					
-					// Add text animations for each panel
+					// Set up stacked cards positioning
+					panels.forEach((panel, i) => {
+						// Position all panels absolutely and set z-index for stacking
+						gsap.set(panel, {
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							width: '100%',
+							height: '100vh',
+							zIndex: panels.length - i, // First card has highest z-index
+							clipPath: i === 0 ? 'inset(0% 0 0 0)' : 'inset(100% 0 0 0)' // Only first card visible initially
+						});
+						
+						// Set up text animations for each panel
+						const texts = panel.querySelectorAll('.slide-text');
+						texts.forEach((text, index) => {
+							text.style.transition = `opacity 0.8s ease-out ${index * 0.1}s, transform 0.8s ease-out ${index * 0.1}s`;
+							if (i === 0) {
+								text.style.opacity = '1';
+								text.style.transform = 'translateY(0px)';
+							} else {
+								text.style.opacity = '0';
+								text.style.transform = 'translateY(30px)';
+							}
+						});
+					});
+					
+					// Set container for stacking
+					gsap.set(container, {
+						position: 'relative',
+						height: '100vh',
+						overflow: 'hidden'
+					});
+					
+					// Create stacked cards timeline (exactly like the HTML example)
+					const tl = gsap.timeline({
+						scrollTrigger: {
+							trigger: container,
+							start: "top top",
+							end: () => "+=" + (window.innerHeight * panels.length),
+							scrub: true,
+							pin: true,
+							anticipatePin: 1
+						}
+					});
+					
 					panels.forEach((panel, i) => {
 						const texts = panel.querySelectorAll('.slide-text');
 						
-						// Set up CSS transitions and initial state
-						texts.forEach((text, index) => {
-							text.style.transition = `opacity 0.8s ease-out ${index * 0.1}s, transform 0.8s ease-out ${index * 0.1}s`;
-							text.style.opacity = '0';
-							text.style.transform = 'translateY(30px)';
-						});
-						
-						// Create ScrollTrigger for this panel's text animation
-						ScrollTrigger.create({
-							trigger: panel,
-							start: 'top center',
-							end: 'bottom center',
-							onEnter: () => {
-								// Animate in with CSS transitions
+						// 1) Reveal current card with clip-path
+						tl.to(panel, {
+							clipPath: "inset(0% 0 0 0)",
+							ease: "power2.out",
+							duration: 0.8,
+							onStart: () => {
+								// Show text when card is revealed
 								texts.forEach(text => {
 									text.style.opacity = '1';
 									text.style.transform = 'translateY(0px)';
 								});
-							},
-							onLeave: () => {
-								// Animate out with CSS transitions
-								texts.forEach(text => {
-									text.style.opacity = '0';
-									text.style.transform = 'translateY(30px)';
-								});
-							},
-							onEnterBack: () => {
-								// Animate in when coming back
-								texts.forEach(text => {
-									text.style.opacity = '1';
-									text.style.transform = 'translateY(0px)';
-								});
-							},
-							onLeaveBack: () => {
-								// Animate out when leaving back
-								texts.forEach(text => {
-									text.style.opacity = '0';
-									text.style.transform = 'translateY(30px)';
-								});
 							}
-						});
-					});
-					
-					// Function to format numbers with leading zero
-					function formatNumber(num) {
-						return num < 10 ? '0' + num : num.toString();
-					}
-					
-					// Variables for state management
-					var current = 0;
-					var locked = false;
-					var isJumping = false; // Flag to prevent onUpdate interference during jumps
-					var touchTime = 0;
-					
-					// Pin container and animate panels
-					var tl = gsap.timeline({
-						scrollTrigger: {
-							trigger: container,
-							start: 'top top',
-							end: function() { return '+=' + steps * window.innerHeight; },
-							pin: true,
-							scrub: true,
-							markers: false,
-							onUpdate: function(self) {
-								if (steps <= 0 || isJumping) return;
-								current = Math.round(self.progress * steps);
-							},
-							onLeave: function() {
-								touchTime = 0;
-								console.log('onLeave, touchTime reset to 0');
-							},
-							onLeaveBack: function() {
-								touchTime = 0;
-								console.log('onLeaveBack, touchTime reset to 0');
-							}
-						}
-					});
-					if (steps > 0) tl.to(panels, { yPercent: -100 * steps, ease: 'none' });
-					
-					var st = tl.scrollTrigger;
-					
-					// Calculate positions for each section
-					var positions = [];
-					var computePositions = function() {
-						if (!st) return;
-						var start = st.start || 0;
-						var end = st.end || start + 1;
-						positions = panels.map(function(_, i) {
-							return start + (end - start) * (steps ? i / steps : 0);
-						});
-					};
-					computePositions();
-					ScrollTrigger.addEventListener('refresh', computePositions);
-					window.addEventListener('resize', computePositions);
-					
-					// Jump to index logic
-					var gotoIndex = function(index) {
-						if (locked || steps <= 0) return;
-						var targetIndex = gsap.utils.clamp(0, steps, index);
-						var y = positions[targetIndex];
-						if (!Number.isFinite(y)) return;
+						}, i);
 						
-						locked = true;
-						isJumping = true; // Prevent onUpdate interference
-						gsap.to(window, {
-							duration: 0.5,
-							scrollTo: { y: y, autoKill: false },
-							ease: 'power3.out',
-							onStart: function() {
-								if (targetIndex === 0 || targetIndex === Number(maxSlide) - 1) {
-									return;
+						// 2) Push previous card completely off screen
+						if (i > 0) {
+							const prevPanel = panels[i - 1];
+							const prevTexts = prevPanel.querySelectorAll('.slide-text');
+							
+							tl.to(prevPanel, {
+								yPercent: -100,
+								duration: 0.6,
+								ease: "power1.in",
+								onStart: () => {
+									// Hide previous card's text
+									prevTexts.forEach(text => {
+										text.style.opacity = '0';
+										text.style.transform = 'translateY(30px)';
+									});
 								}
-							},
-							onComplete: function() {
-								current = targetIndex;
-								setTimeout(function() { 
-									locked = false; 
-									isJumping = false; // Re-enable onUpdate
-								}, 1000);
-							}
-						});
-					};
-					
-					// Observer for wheel/touch gestures (desktop only)
-					var obs = Observer.create({
-						target: window,
-						type: 'wheel,touch,pointer',
-						preventDefault: true,
-						tolerance: 14,
-						wheelSpeed: 1,
-						onDown: function() { 
-							// If at last slide, allow scroll to continue to about-us section
-							if (current >= steps) {
-								// At last panel: allow natural page scrolling
-								obs.disable();
-								setTimeout(function() { obs.enable(); }, 400); // enough time for 1-2 scroll notches to exit
-								return;
-							}
-							if (current === 0 && touchTime === 0) {
-								++touchTime;
-								gotoIndex(current); 
-								return;
-							}
-							gotoIndex(current + 1); 
-						},
-						onUp: function() { 
-							// If at first slide, allow scroll to continue upward
-							if (current <= 0) {
-								obs.disable();
-								setTimeout(function() { obs.enable(); }, 400);
-								return;
-							}
-							if (current === maxSlide - 1 && touchTime === 0) {
-								++touchTime;
-								gotoIndex(current);
-								return;
-							}
-							gotoIndex(current - 1); 
+							}, i + 0.2);
 						}
 					});
 				}
