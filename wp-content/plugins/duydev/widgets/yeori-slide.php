@@ -365,43 +365,52 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 							end: () => "+=" + (window.innerHeight * panels.length),
 							scrub: true,
 							pin: true,
-							anticipatePin: 1
+							anticipatePin: 1,
+							onUpdate: (self) => {
+								// Update text visibility based on scroll progress
+								const progress = self.progress;
+								const totalPanels = panels.length;
+								
+								panels.forEach((panel, i) => {
+									const texts = panel.querySelectorAll('.slide-text');
+									
+									// Calculate which panel should be active
+									const panelStart = i / totalPanels;
+									const panelEnd = (i + 1) / totalPanels;
+									
+									// Show text when this panel is active (with some tolerance)
+									if (progress >= panelStart - 0.1 && progress <= panelEnd + 0.1) {
+										texts.forEach(text => {
+											text.style.opacity = '1';
+											text.style.transform = 'translateY(0px)';
+										});
+									} else {
+										texts.forEach(text => {
+											text.style.opacity = '0';
+											text.style.transform = 'translateY(30px)';
+										});
+									}
+								});
+							}
 						}
 					});
 					
 					panels.forEach((panel, i) => {
-						const texts = panel.querySelectorAll('.slide-text');
-						
 						// 1) Reveal current card with clip-path
 						tl.to(panel, {
 							clipPath: "inset(0% 0 0 0)",
-							ease: "power2.out",
-							duration: 0.8,
-							onStart: () => {
-								// Show text when card is revealed
-								texts.forEach(text => {
-									text.style.opacity = '1';
-									text.style.transform = 'translateY(0px)';
-								});
-							}
+							ease: "power3.out",
+							duration: 1
 						}, i);
 						
 						// 2) Push previous card completely off screen
 						if (i > 0) {
 							const prevPanel = panels[i - 1];
-							const prevTexts = prevPanel.querySelectorAll('.slide-text');
 							
 							tl.to(prevPanel, {
 								yPercent: -100,
-								duration: 0.6,
-								ease: "power1.in",
-								onStart: () => {
-									// Hide previous card's text
-									prevTexts.forEach(text => {
-										text.style.opacity = '0';
-										text.style.transform = 'translateY(30px)';
-									});
-								}
+								duration: 1,
+								ease: "power3.in"
 							}, i + 0.2);
 						}
 					});
