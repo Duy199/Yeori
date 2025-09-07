@@ -250,7 +250,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						
 						// Set up CSS transitions and initial state
 						texts.forEach((text, index) => {
-							text.style.transition = `opacity 0.8s ease-out ${index * 0.1}s, transform 0.8s ease-out ${index * 0.1}s`;
+							text.style.transition = `opacity 0.8s ease-out ${index * 0.5}s, transform 0.8s ease-out ${index * 0.5}s`;
 							text.style.opacity = '0';
 							text.style.transform = 'translateY(30px)';
 						});
@@ -357,13 +357,14 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						overflow: 'hidden'
 					});
 					
-					// Create stacked cards timeline (exactly like the HTML example)
+					// Create stacked cards timeline (smooth like version 2)
 					const tl = gsap.timeline({
+						defaults: { duration: 1.25, ease: "power2.out" }, // longer duration for smoother movement
 						scrollTrigger: {
 							trigger: container,
 							start: "top top",
-							end: () => "+=" + (window.innerHeight * panels.length),
-							scrub: true,
+							end: () => "+=" + (window.innerHeight * panels.length * 1.5), // extend scroll distance by 50%
+							scrub: 1.8, // higher scrub for smoother animation (1.2-2.0 range)
 							pin: true,
 							anticipatePin: 1,
 							onUpdate: (self) => {
@@ -374,12 +375,11 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 								panels.forEach((panel, i) => {
 									const texts = panel.querySelectorAll('.slide-text');
 									
-									// Calculate which panel should be active
-									const panelStart = i / totalPanels;
-									const panelEnd = (i + 1) / totalPanels;
+									// Calculate which panel should be active with better logic
+									const currentPanelIndex = Math.round(progress * (totalPanels - 1));
 									
-									// Show text when this panel is active (with some tolerance)
-									if (progress >= panelStart - 0.1 && progress <= panelEnd + 0.1) {
+									// Show text when this is the current panel
+									if (i === currentPanelIndex) {
 										texts.forEach(text => {
 											text.style.opacity = '1';
 											text.style.transform = 'translateY(0px)';
@@ -399,19 +399,19 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						// 1) Reveal current card with clip-path
 						tl.to(panel, {
 							clipPath: "inset(0% 0 0 0)",
-							ease: "power3.out",
-							duration: 1
+							immediateRender: false // prevent flash
 						}, i);
 						
-						// 2) Push previous card completely off screen
+						// 2) Push previous card completely off screen with better timing
 						if (i > 0) {
 							const prevPanel = panels[i - 1];
 							
 							tl.to(prevPanel, {
 								yPercent: -100,
-								duration: 1,
-								ease: "power3.in"
-							}, i + 0.2);
+								duration: 1.0,
+								ease: "power3.inOut", // smoother easing
+								force3D: true // hardware acceleration
+							}, i + 0.15); // reduced timing for better sync
 						}
 					});
 				}
