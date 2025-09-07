@@ -101,7 +101,10 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 						<p class="title">✧ Highlights công nghệ ✧</p>
 						<div class="panel-detail">
 							<div class="panel-content-1">
-								<h2 class="slide-text heading"><?php echo esc_html($slide['heading']); ?></h2>
+								<div class="heading-wrapper">
+									<h2 class="slide-text heading"><?php echo esc_html($slide['heading']); ?></h2>
+									<img src="<?php echo DUYDEV_PLUGIN_IMG . 'vector-left.svg'; ?>" alt="">
+								</div>
 								<div class="mouse">
 									<p>Tiếp tục cuộn chuột</p>
 									<img src="<?php echo DUYDEV_PLUGIN_IMG . 'Scroll Prompt.svg'; ?>" alt="mouse">
@@ -130,7 +133,10 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 									<p class="max">/0<?php echo esc_html($maxSlide); ?></p>
 								</div>
 								<div class="content-wrapper">
-									<p class="slide-text content"><?php echo esc_html($slide['content']); ?></p>
+									<div class="description-wrapper">
+										<p class="slide-text content"><?php echo esc_html($slide['content']); ?></p>
+										<img src="<?php echo DUYDEV_PLUGIN_IMG . 'vector-right.svg'; ?>" alt="">
+									</div>
 									<div class="button-wrapper">
 										<a href="" class="button-link">
 											<span>Tìm hiểu thêm</span>

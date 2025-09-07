@@ -50,6 +50,17 @@
         // margin-bottom: 125px;
         width: 20%;
         flex-grow: 1;
+        .heading-wrapper {
+            position: relative;
+            img {
+                position: absolute;
+                width: 114px;
+                top: 24px;
+                right: 0;
+                transform: translateX(100%);
+                z-index: 0;
+            }
+        }
         .heading {
             font-weight: 600;
             letter-spacing: -1px;
@@ -129,7 +140,7 @@
             .video-section {
                 padding: 30px;
                 background: rgba(240, 247, 254, 0.6);
-                // backdrop-filter: blur(40px);
+                backdrop-filter: blur(40px);
                 flex-shrink: 0;
                 border-radius: 50%;
                 @media(max-width: 767px) {
@@ -211,15 +222,25 @@
             @media(max-width: 767px) {
                 gap: 64;
             }
-            .content {
-                font-weight: 400;
-                line-height: 1.44;
-                font-size: 18px;
-                letter-spacing: 0px;
-                margin: 0;
-                @media(max-width: 767px) {
-                    font-size: 16px;
-                    opacity: 0.8 !important;
+            .description-wrapper {
+                position: relative;
+                .content {
+                    font-weight: 400;
+                    line-height: 1.44;
+                    font-size: 18px;
+                    letter-spacing: 0px;
+                    margin: 0;
+                    @media(max-width: 767px) {
+                        font-size: 16px;
+                        opacity: 0.8 !important;
+                    }
+                }
+                img {
+                    position: absolute;
+                    bottom: 12px;
+                    left: 0;
+                    width: 128px;
+                    transform: translateX(-100%);
                 }
             }
             .button-wrapper {
@@ -237,6 +258,9 @@
                 padding: 12px;
                 width: 300px;
                 gap: 12px;
+                @media(max-width: 1024px) {
+                    width: auto;
+                }
                 @media(max-width: 767px) {
                     width: 179px;
                     padding: 8px 8px 8px 20px;
