@@ -112,7 +112,6 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 								<p class="title">✧ Highlights công nghệ ✧</p>
 							</div>
 							<div class="panel-content-2">
-								<!-- <p class="title">✧ Highlights công nghệ ✧</p> -->
 								<?php if ($video_url): ?>
 									<div class="video-wrapper">
 										<div class="video-section">
@@ -120,6 +119,7 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 												<source src="<?php echo esc_url($video_url); ?>" type="video/mp4">
 												Your browser does not support the video tag.
 											</video>
+											<img src="<?php echo DUYDEV_PLUGIN_IMG . 'vector-right.svg'; ?>" alt="">
 										</div>
 										<div class=line-wrapper>
 											<div class="line"></div>
@@ -135,7 +135,6 @@ class Yeori_Slide_Widget extends \Elementor\Widget_Base {
 								<div class="content-wrapper">
 									<div class="description-wrapper">
 										<p class="slide-text content"><?php echo esc_html($slide['content']); ?></p>
-										<img src="<?php echo DUYDEV_PLUGIN_IMG . 'vector-right.svg'; ?>" alt="">
 									</div>
 									<div class="button-wrapper">
 										<a href="" class="button-link">

@@ -60,6 +60,9 @@
                 transform: translateX(100%);
                 z-index: 0;
             }
+            @media(max-width: 767px) {
+                display: none;
+            }
         }
         .heading {
             font-weight: 600;
@@ -143,8 +146,23 @@
                 backdrop-filter: blur(40px);
                 flex-shrink: 0;
                 border-radius: 50%;
+                position: relative;
                 @media(max-width: 767px) {
                     padding: 25px;
+                }
+                img {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    width: 108px;
+                    transform: translateX(30%);
+                    @media(max-width: 1024px) {
+                        // transform: translateX(30%);
+                        width: 84px;
+                    }
+                    @media(max-width: 767px) {
+                        display: none;
+                    }
                 }
                 video {
                     width: 344px; 
