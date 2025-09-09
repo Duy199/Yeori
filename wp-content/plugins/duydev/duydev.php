@@ -73,8 +73,10 @@ class DuyDev {
     public function register_widgets() {
     require_once(__DIR__ . '/widgets/duydev.php');
     require_once(__DIR__ . '/widgets/yeori-slide.php');
+    require_once(__DIR__ . '/widgets/yeori-skin.php');
     \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \DuyDev_Base());
     \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Yeori_Slide_Widget());
+    \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new \Yeori_Skin_Widget());
 
     }
 

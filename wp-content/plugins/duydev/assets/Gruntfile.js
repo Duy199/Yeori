@@ -34,6 +34,7 @@ module.exports = function(grunt) {
 
 					/* widgets */
 					'js/widgets/aText.js',
+					'js/widgets/yeori-skin.js',
 				],
 				dest: 'js/duydev.js'
 			}
