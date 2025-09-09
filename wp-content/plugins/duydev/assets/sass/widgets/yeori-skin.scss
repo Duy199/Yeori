@@ -2,6 +2,14 @@
     /* =========================
        Layout
     ========================= */
+    /* ép tắt mọi chuyển động để không bị trễ */
+    .loupe-wrap .img-after,
+    .loupe-wrap .ring,
+    .loupe-wrap .handle,
+    .loupe-wrap .lens {
+    transition: none !important;
+    }
+
     .skin-loupe {
       padding: 12px;
       display: grid;
@@ -81,7 +89,6 @@
       border-radius: 50%;
       border: var(--border) solid rgba(240, 247, 254, 0.6);
       background: transparent;
-      padding: 10px;
     }
 
 
@@ -90,7 +97,7 @@
       top: 50%;
       transform: translateY(-50%);
       right: 0;
-      transform: translateX(38px);
+      transform: translateX(30px);
       width: 500px;
       height: 30px;
       background: rgba(240, 247, 254, 0.6);
