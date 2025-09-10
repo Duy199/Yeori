@@ -97,7 +97,7 @@ class Yeori_Skin_Widget extends \Elementor\Widget_Base {
 					<div class="swiper yeori-skin-swiper">
 						<div class="swiper-wrapper">
 							<?php foreach($skin_gallery as $skin) : ?>
-								<div class="swiper-slide">
+								<div class="swiper-slide <?php echo $i==0 ? 'active' : ''; ?>">
 									<img class="skin-icon <?php echo $i==0 ? 'active' : ''; ?>" src="<?php echo $skin['skin_icon']['url']; ?>" alt="">
 								</div>
 								<?php $i += 1; ?>

@@ -352,11 +352,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 jQuery(document).ready(function($){
     // Initialize skin icon click handlers
-    $('.yeori-skin-select .skin-icon').each(function(index) {
+    $('.yeori-skin-select .swiper-slide').each(function(index) {
         $(this).on('click', function() {
             $('.skin-loupe').removeClass('active');
             $('.skin-loupe').eq(index).addClass('active');
-            $('.skin-icon').removeClass('active');
+            $('.yeori-skin-select .swiper-slide').removeClass('active');
             $(this).addClass('active');
         })
     });
