@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let lensSize = Number(wrap.dataset.lens || 360);   // đường kính lens (px)
             
             // for mobile and ipad
+
             if (window.innerWidth <= 1024) {
                 lensSize = 360;
             }
@@ -92,4 +93,15 @@ document.addEventListener('DOMContentLoaded', function() {
             render();
         })();
     });
+});
+
+jQuery(document).ready(function($){
+    $('.yeori-skin-select .skin-icon').each(function(index) {
+        $(this).on('click', function() {
+            $('.skin-loupe').removeClass('active');
+            $('.skin-loupe').eq(index).addClass('active');
+            $('.skin-icon').removeClass('active');
+            $(this).addClass('active');
+        })
+    }) 
 });
