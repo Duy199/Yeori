@@ -77,6 +77,11 @@ class Yeori_Skin_Widget extends \Elementor\Widget_Base {
 
 						<!-- Label góc -->
 						<span class="before-label">Before</span>
+
+						<button class="boom-out">
+							<span>Giữ để xem kết quả</span>
+							<img src="<?php echo DUYDEV_PLUGIN_IMG . 'hold.svg'; ?>" alt="">
+						</button>
 						</div>
 					</div>
 					<?php $i+=1; ?>
@@ -84,13 +89,13 @@ class Yeori_Skin_Widget extends \Elementor\Widget_Base {
 			</div>
 			<?php $i = 0?>
 			<div class="yeori-skin-select">
-				<div class="title">
-					<p>Kết quả sử dụng:</p>
-					<p>Giảm về năng trên da</p>
+				<div class="title koho">
+					<p class="top">Kết quả sử dụng:</p>
+					<p class="bottom">Giảm về năng trên da</p>
 				</div>
 				<div class="yeori-skin-select-wrapper">
 					<div class="swiper yeori-skin-swiper">
-						<div class="swiper-wrapper skin-wrapper">
+						<div class="swiper-wrapper">
 							<?php foreach($skin_gallery as $skin) : ?>
 								<div class="swiper-slide">
 									<img class="skin-icon <?php echo $i==0 ? 'active' : ''; ?>" src="<?php echo $skin['skin_icon']['url']; ?>" alt="">

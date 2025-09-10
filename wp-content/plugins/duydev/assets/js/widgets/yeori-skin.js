@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (wraps.length === 0) return;
     
+    if(window.innerWidth <= 767) {
+        return;
+    } 
+
     // Loop through each loupe instance
     wraps.forEach(function(wrap, index) {
         // Self-contained function for each loupe instance
@@ -183,30 +187,23 @@ jQuery(document).ready(function($){
         })
     });
 
-    if(window.innerWidth >= 767) {
-        $('.skin-wrapper').removeClass('swiper-wrapper');
-        $('.yeori-skin-swiper').removeClass('swiper');
-    }
     
     // Initialize Swiper for mobile (below 767px)
-    function initMobileSwiper() {
-        if (window.innerWidth <= 767) {
-            // Check if Swiper is available
-            if (typeof Swiper !== 'undefined') {
-                const skinSwiper = new Swiper('.yeori-skin-swiper', {
-                    slidesPerView: 'auto',
-                    spaceBetween: 12,
-                    freeMode: true,
-                    grabCursor: true,
-                    speed: 800,
-                });
-            } 
-        }
+    function initSwiper() {
+        if (typeof Swiper !== 'undefined') {
+            const skinSwiper = new Swiper('.yeori-skin-swiper', {
+                slidesPerView: 'auto',
+                spaceBetween: 12,
+                freeMode: true,
+                grabCursor: true,
+                speed: 800,
+            });
+        } 
     }
     
     
     // Initialize on page load
-    initMobileSwiper();
+    initSwiper();
     
     // Re-initialize on window resize
     $(window).on('resize', function() {
