@@ -15,9 +15,13 @@
 
       .loupe-wrap .img-after,
       .loupe-wrap .ring,
-      .loupe-wrap .handle,
-      .loupe-wrap .lens {
+      .loupe-wrap .handle {
         transition: none !important;
+      }
+      
+      .loupe-wrap .lens {
+        transition: opacity 0.3s ease !important;
+        opacity: 0;
       }
 
       .skin-loupe {

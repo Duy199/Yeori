@@ -11,8 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const after = wrap.querySelector('.img-after');
             const ring = wrap.querySelector('.ring');
             const handle = wrap.querySelector('.handle');
+            const lens = wrap.querySelector('.lens');
             
-            if (!after || !ring || !handle) return;
+            if (!after || !ring || !handle || !lens) return;
             
             console.log('Initialized skin loupe #' + (index + 1));
             
@@ -29,6 +30,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // Sync CSS var với data-lens
             ring.style.setProperty('--size', lensSize + 'px');
             
+            // Set initial state
+            let isHovering = false;
+            let currentRadius = 0;
+            let targetRadius = 0;
+            let animationId = null;
+            
+            // Initialize lens as hidden
+            lens.style.opacity = '0';
+            after.style.clipPath = `circle(0px at 50% 50%)`;
+            
             let rect = wrap.getBoundingClientRect();
             
             // Update rect on window resize
@@ -40,6 +51,29 @@ document.addEventListener('DOMContentLoaded', function() {
             let raf = null;
             let _x = rect.left + rect.width * 0.6;
             let _y = rect.top + rect.height * 0.55;
+            
+            function animateRadius() {
+                const speed = 0.15; // Animation speed (0-1)
+                const diff = targetRadius - currentRadius;
+                
+                if (Math.abs(diff) > 1) {
+                    currentRadius += diff * speed;
+                    
+                    const lx = _x - rect.left;
+                    const ly = _y - rect.top;
+                    
+                    // Update clip-path with current radius
+                    after.style.clipPath = `circle(${currentRadius}px at ${lx}px ${ly}px)`;
+                    
+                    animationId = requestAnimationFrame(animateRadius);
+                } else {
+                    currentRadius = targetRadius;
+                    const lx = _x - rect.left;
+                    const ly = _y - rect.top;
+                    after.style.clipPath = `circle(${currentRadius}px at ${lx}px ${ly}px)`;
+                    animationId = null;
+                }
+            }
             
             function moveTo(clientX, clientY) {
                 _x = Math.max(rect.left, Math.min(clientX, rect.right));
@@ -61,8 +95,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 handle.style.left = (lx + lensSize / 2) + 'px';
                 handle.style.top = ly + 'px';
                 
-                // AFTER chỉ hiển thị trong vòng tròn
-                after.style.clipPath = `circle(${lensSize/2}px at ${lx}px ${ly}px)`;
+                // Update clip-path position if hovering
+                if (isHovering) {
+                    after.style.clipPath = `circle(${currentRadius}px at ${lx}px ${ly}px)`;
+                }
                 
                 // Scale AFTER và dịch chuyển để giữ đúng điểm focus
                 after.style.transform = `translate(${-lx*(zoom-1)}px, ${-ly*(zoom-1)}px) scale(${zoom})`;
@@ -71,7 +107,28 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update rect when entering a loupe
             wrap.addEventListener('mouseenter', function(e) {
                 updateRect();
+                isHovering = true;
+                targetRadius = lensSize / 2;
+                lens.style.opacity = '1';
+                
+                // Start animation if not already running
+                if (!animationId) {
+                    animateRadius();
+                }
+                
                 moveTo(e.clientX, e.clientY);
+            });
+            
+            // Hide lens and shrink circle when mouse leaves
+            wrap.addEventListener('mouseleave', function(e) {
+                isHovering = false;
+                targetRadius = 0;
+                lens.style.opacity = '0';
+                
+                // Start shrinking animation
+                if (!animationId) {
+                    animateRadius();
+                }
             });
             
             // Desktop
@@ -80,6 +137,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // Touch
             wrap.addEventListener('touchstart', e => {
                 updateRect();
+                isHovering = true;
+                targetRadius = lensSize / 2;
+                lens.style.opacity = '1';
+                
+                // Start animation if not already running
+                if (!animationId) {
+                    animateRadius();
+                }
+                
                 const t = e.touches[0];
                 moveTo(t.clientX, t.clientY);
             }, { passive: true });
@@ -89,8 +155,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 moveTo(t.clientX, t.clientY);
             }, { passive: true });
             
-            // Khởi tạo ở giữa
-            render();
+            wrap.addEventListener('touchend', e => {
+                isHovering = false;
+                targetRadius = 0;
+                lens.style.opacity = '0';
+                
+                // Start shrinking animation
+                if (!animationId) {
+                    animateRadius();
+                }
+            }, { passive: true });
+            
+            // Don't initialize in the center by default (lens is hidden)
+            // render();
         })();
     });
 });
