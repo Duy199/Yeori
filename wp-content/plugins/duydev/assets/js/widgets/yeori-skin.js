@@ -48,13 +48,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             function render() {
                 raf = null;
-                
+
                 const lx = _x - rect.left;   // vị trí trong container
                 const ly = _y - rect.top;
-                
+
                 // Đặt tâm ring tại con trỏ
                 ring.style.left = lx + 'px';
-                ring.style.top = ly + 'px';
+                ring.style.top  = ly + 'px';
                 
                 // Handle dính mép phải của lens
                 handle.style.left = (lx + lensSize / 2) + 'px';

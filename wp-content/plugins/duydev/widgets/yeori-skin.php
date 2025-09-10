@@ -54,7 +54,7 @@ class Yeori_Skin_Widget extends \Elementor\Widget_Base {
 		<div class="yeori-skin-wrapper">
             <?php foreach ($skin_gallery as $skin): ?>
                 <div class="skin-loupe">
-                    <div class="loupe-wrap" data-zoom="1" data-lens="536">
+                    <div class="loupe-wrap" data-zoom="1" data-lens="">
                     <!-- BEFORE -->
                     <img class="img-base" src="<?php echo $skin['skin_before']['url']; ?>" alt="Before">
 
