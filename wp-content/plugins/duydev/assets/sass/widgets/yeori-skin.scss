@@ -186,25 +186,30 @@
     }
     .boom-out {
       position: absolute;
-      z-index: 3;
-      display: none;
+      z-index: 2;
       left: 50%;
       transform: translateX(-50%);
-      bottom: 16px;
-      display: flex;
+      bottom: 20px;
+      background: #33479D;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 12px 20px;
+      display: none;
       align-items: center;
       gap: 8px;
-      color: white;
-      background-color: #33479D;
-      padding: 8px;
-      border-radius: 99px;
-      @media(max-width: 767px) {
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.3s ease;
+
+      @media (max-width: 767px) {
         display: flex;
-        align-items: center;
-        transition: all 0.5s ease;
-        &:hover {
-          transform: translateY(5px) translateX(-50%);
-        }
+      }
+
+      &:active {
+        transform: translateX(-50%) scale(0.95);
       }
     }
   }
@@ -265,6 +270,9 @@
       .swiper-slide {
         width: fit-content;
         height: 86px;
+        &:last-child {
+          margin-right: 0 !important;
+        }
       }
 
       @media (max-width: 767px) {
@@ -304,7 +312,6 @@
 
         &.active {
           border: 8px solid #306DE0;
-
           @media (max-width: 767px) {
             border: 6px solid #306DE0;
           }
