@@ -174,15 +174,62 @@
     border: 1px solid #0233BFBF;
     padding: 24px;
     width: fit-content;
+    
+    @media (max-width: 767px) {
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+      width: 100%;
+      border-radius: 20px;
+      padding: 24px 0px;
+    }
+    
     .title {
       p {
         margin: 0;
         color: #33479D;
+        
+        @media (max-width: 767px) {
+          text-align: center;
+          font-size: 14px;
+        }
       }
     }
     .yeori-skin-select-wrapper {
       display: flex;
       gap: 12px;
+      .skin-wrapper {
+        display: flex;
+        gap: 12px;
+        @media(max-width: 767px) {
+          gap: 0;
+        }
+      }
+      .swiper-slide {
+        width: fit-content;
+        height: 86px;
+      }
+      @media (max-width: 767px) {
+        gap: 0;
+        width: 100%;
+        overflow: hidden;
+        
+        .yeori-skin-swiper {
+          width: 100%;
+          padding: 0px 20px;
+          .swiper-wrapper {
+            display: flex;
+            
+            .swiper-slide {
+              width: fit-content;
+              margin-right: 12px;
+              flex-shrink: 0;
+              // height: fit-content;
+            }
+          }
+        }
+      }
+      
       img {
         cursor: pointer;
         width: 114px;
@@ -190,8 +237,18 @@
         object-fit: cover;
         border-radius: 8px;
         transition: all 0.5s ease;
+        
+        @media (max-width: 767px) {
+          width: 114px;
+          height: 86px;
+        }
+        
         &.active {
           border: 8px solid #306DE0;
+          
+          @media (max-width: 767px) {
+            border: 6px solid #306DE0;
+          }
         }
       }
     }

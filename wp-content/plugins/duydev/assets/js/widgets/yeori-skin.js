@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 jQuery(document).ready(function($){
+    // Initialize skin icon click handlers
     $('.yeori-skin-select .skin-icon').each(function(index) {
         $(this).on('click', function() {
             $('.skin-loupe').removeClass('active');
@@ -103,5 +104,44 @@ jQuery(document).ready(function($){
             $('.skin-icon').removeClass('active');
             $(this).addClass('active');
         })
-    }) 
+    });
+
+    if(window.innerWidth >= 767) {
+        $('.skin-wrapper').removeClass('swiper-wrapper');
+        $('.yeori-skin-swiper').removeClass('swiper');
+    }
+    
+    // Initialize Swiper for mobile (below 767px)
+    function initMobileSwiper() {
+        if (window.innerWidth <= 767) {
+            // Check if Swiper is available
+            if (typeof Swiper !== 'undefined') {
+                const skinSwiper = new Swiper('.yeori-skin-swiper', {
+                    slidesPerView: 'auto',
+                    spaceBetween: 12,
+                    freeMode: true,
+                    grabCursor: true,
+                    speed: 800,
+                });
+            } 
+        }
+    }
+    
+    
+    // Initialize on page load
+    initMobileSwiper();
+    
+    // Re-initialize on window resize
+    $(window).on('resize', function() {
+        // Destroy existing swiper instance if viewport changes
+        if (window.innerWidth > 767) {
+            $('.yeori-skin-swiper').each(function() {
+                if (this.swiper) {
+                    this.swiper.destroy(true, true);
+                }
+            });
+        } else {
+            setTimeout(initMobileSwiper, 100);
+        }
+    });
 });

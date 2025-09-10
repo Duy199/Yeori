@@ -89,10 +89,16 @@ class Yeori_Skin_Widget extends \Elementor\Widget_Base {
 					<p>Giảm về năng trên da</p>
 				</div>
 				<div class="yeori-skin-select-wrapper">
-					<?php foreach($skin_gallery as $skin) : ?>
-						<img class="skin-icon <?php echo $i==0 ? 'active' : ''; ?>" src="<?php echo $skin['skin_icon']['url']; ?>" alt="">
-						<?php $i += 1; ?>
-					<?php endforeach; ?>
+					<div class="swiper yeori-skin-swiper">
+						<div class="swiper-wrapper skin-wrapper">
+							<?php foreach($skin_gallery as $skin) : ?>
+								<div class="swiper-slide">
+									<img class="skin-icon <?php echo $i==0 ? 'active' : ''; ?>" src="<?php echo $skin['skin_icon']['url']; ?>" alt="">
+								</div>
+								<?php $i += 1; ?>
+							<?php endforeach; ?>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
