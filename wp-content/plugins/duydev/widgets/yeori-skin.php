@@ -49,11 +49,11 @@ class Yeori_Skin_Widget extends \Elementor\Widget_Base {
 		
 		// Get the skin gallery repeater field
 		$skin_gallery = get_field('skin_gallery', $post_id);
-		
+		$i = 0;
 		?>
 		<div class="yeori-skin-wrapper">
             <?php foreach ($skin_gallery as $skin): ?>
-                <div class="skin-loupe">
+                <div class="skin-loupe <?php echo $i===0 ? 'active' : ''; ?>">
                     <div class="loupe-wrap" data-zoom="1" data-lens="">
                     <!-- BEFORE -->
                     <img class="img-base" src="<?php echo $skin['skin_before']['url']; ?>" alt="Before">
@@ -78,6 +78,7 @@ class Yeori_Skin_Widget extends \Elementor\Widget_Base {
                     <span class="before-label">Before</span>
                     </div>
                 </div>
+                <?php $i+=1; ?>
             <?php endforeach ?>    
 		</div>
 				
